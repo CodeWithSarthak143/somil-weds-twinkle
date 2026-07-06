@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="You are cordially invited to celebrate our wedding. Open the doors to reveal our special day.">
+    <title>Wedding Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== INTRO SCENE: Palace Facade + Doors ===== -->
+    <div id="intro-scene">
+        <!-- The full palace facade background -->
+        <div id="facade-wrapper">
+            <img 
+                id="facade-img" 
+                src="images/Layer 0.png" 
+                alt="Palace Facade" 
+                draggable="false"
+            >
+
+            <!-- 3D Door Container - positioned over the archway opening -->
+            <div id="door-container">
+                <div id="door-perspective">
+                    <!-- Left Door -->
+                    <div id="door-left" class="door-panel">
+                        <img src="images/Background copy.png" alt="Left Door" draggable="false">
+                    </div>
+                    <!-- Right Door -->
+                    <div id="door-right" class="door-panel">
+                        <img src="images/Background copy 2.png" alt="Right Door" draggable="false">
+                    </div>
+                </div>
+
+                <!-- Tap Hint Overlay -->
+                <div id="tap-hint">
+                    <div id="tap-hint-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/>
+                            <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/>
+                            <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/>
+                            <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 13"/>
+                        </svg>
+                    </div>
+                    <span id="tap-hint-text">Tap to Open</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== INVITATION SCENE: Revealed after doors open ===== -->
+    <div id="invitation-scene">
+        <div id="invitation-card">
+            <div class="ornament-top">✦</div>
+            <p class="invitation-subtitle">You are cordially invited to</p>
+            <p class="invitation-label">THE WEDDING CELEBRATION OF</p>
+            <h1 class="couple-names">
+                <span class="name">Groom</span>
+                <span class="ampersand">&</span>
+                <span class="name">Bride</span>
+            </h1>
+            <div class="divider">
+                <span class="divider-line"></span>
+                <span class="divider-diamond">◆</span>
+                <span class="divider-line"></span>
+            </div>
+            <div class="event-details">
+                <div class="detail-block">
+                    <span class="detail-label">Date</span>
+                    <span class="detail-value">Saturday, January 1, 2027</span>
+                </div>
+                <div class="detail-block">
+                    <span class="detail-label">Time</span>
+                    <span class="detail-value">6:00 PM Onwards</span>
+                </div>
+                <div class="detail-block">
+                    <span class="detail-label">Venue</span>
+                    <span class="detail-value">The Grand Palace Banquets</span>
+                    <span class="detail-sub">123 Royal Lane, New Delhi</span>
+                </div>
+            </div>
+            <div class="divider">
+                <span class="divider-line"></span>
+                <span class="divider-diamond">◆</span>
+                <span class="divider-line"></span>
+            </div>
+            <p class="rsvp-text">We request the honour of your presence</p>
+            <div class="ornament-bottom">✦</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

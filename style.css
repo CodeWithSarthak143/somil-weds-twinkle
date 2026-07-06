@@ -1,0 +1,402 @@
+/* ================================================
+   RESET & BASE STYLES
+   ================================================ */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #f5f0eb;
+    font-family: 'Montserrat', sans-serif;
+}
+
+img {
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+
+/* ================================================
+   INTRO SCENE — Palace Facade + Doors
+   ================================================ */
+#intro-scene {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8e0d8;
+    overflow: hidden;
+    transition: opacity 0.8s ease;
+}
+
+#intro-scene.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/*
+   The facade wrapper sizes itself to COVER the viewport
+   while maintaining the original image aspect ratio (1920:1080 = 16:9).
+   This way, door positions as percentages map directly to the
+   original image coordinates — no guessing per breakpoint.
+*/
+#facade-wrapper {
+    position: relative;
+    flex-shrink: 0;  /* Never squeeze — overflow and crop instead */
+    /* Cover the viewport: whichever dimension is limiting, use the bigger calc */
+    width: max(100vw, calc(100vh * 1920 / 1080));
+    height: max(100vh, calc(100vw * 1080 / 1920));
+    /* Zoom origin = center of the archway opening in the image (~50% x, ~46% y) */
+    transform-origin: 50% 46%;
+    transition: transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+#facade-wrapper.zooming {
+    transform: scale(6);
+}
+
+/* The image fills the wrapper exactly — no object-fit needed */
+#facade-img {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ================================================
+   DOOR CONTAINER — Overlaid on the archway
+   ================================================
+   Percentages are relative to the original 1920x1080 image.
+   Archway opening measured from the image:
+     Center X   = 50%
+     Top edge   ~ 165px  -> 15.3%
+     Width      ~ 520px  -> 27.1%
+     Height     ~ 760px  -> 70.4%
+   ------------------------------------------------ */
+#door-container {
+    position: absolute;
+    top: 19.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 27.1%;
+    height: 70.4%;
+    cursor: pointer;
+    z-index: 10;
+}
+
+#door-perspective {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    perspective: 1200px;
+}
+
+
+/* ================================================
+   DOOR PANELS — 3D Swing Open
+   ================================================ */
+.door-panel {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.door-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+#door-left {
+    transform-origin: left center;
+}
+
+#door-right {
+    transform-origin: right center;
+}
+
+/* When doors are open */
+#door-left.open {
+    transform: rotateY(-105deg);
+}
+
+#door-right.open {
+    transform: rotateY(105deg);
+}
+
+
+/* ================================================
+   TAP HINT — Pulsing glow on the door
+   ================================================ */
+#tap-hint {
+    position: absolute;
+    bottom: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 20;
+    animation: tapPulse 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+#tap-hint.hidden {
+    display: none;
+}
+
+#tap-hint-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.4), rgba(212, 175, 55, 0.05));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d4af37;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+#tap-hint-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #d4af37;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+
+@keyframes tapPulse {
+    0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+    50%      { opacity: 1;   transform: translateX(-50%) scale(1.08); }
+}
+
+
+/* ================================================
+   INVITATION SCENE — Revealed after zoom
+   ================================================ */
+#invitation-scene {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    overflow-y: auto;
+    padding: 40px 20px;
+}
+
+#invitation-scene.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* ================================================
+   INVITATION CARD
+   ================================================ */
+#invitation-card {
+    text-align: center;
+    max-width: 620px;
+    width: 100%;
+    padding: 60px 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: none;
+}
+
+#invitation-card.animate-in {
+    animation: cardFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes cardFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ornaments */
+.ornament-top, .ornament-bottom {
+    font-size: 28px;
+    color: #c9a84c;
+    letter-spacing: 10px;
+    margin-bottom: 20px;
+}
+.ornament-bottom {
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+/* Subtitle */
+.invitation-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: #8a7d6b;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+/* Label */
+.invitation-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #b8a07a;
+    margin-bottom: 24px;
+}
+
+/* Couple Names */
+.couple-names {
+    font-family: 'Great Vibes', cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 28px;
+}
+
+.couple-names .name {
+    font-size: 52px;
+    font-weight: 400;
+    color: #3d2e1f;
+    line-height: 1.2;
+}
+
+.couple-names .ampersand {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: #c9a84c;
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.divider-line {
+    display: block;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+}
+
+.divider-diamond {
+    font-size: 10px;
+    color: #c9a84c;
+}
+
+/* Event Details */
+.event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.detail-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c9a84c;
+}
+
+.detail-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #3d2e1f;
+}
+
+.detail-sub {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #8a7d6b;
+}
+
+/* RSVP */
+.rsvp-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #8a7d6b;
+    margin-top: 4px;
+}
+
+
+/* ================================================
+   RESPONSIVE — Only invitation text sizing
+   (Door positioning is handled automatically by
+    the wrapper-based cover approach)
+   ================================================ */
+@media (max-width: 768px) {
+    .couple-names .name {
+        font-size: 40px;
+    }
+
+    #invitation-card {
+        padding: 40px 24px;
+    }
+
+    .detail-value {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 420px) {
+    .couple-names .name {
+        font-size: 34px;
+    }
+
+    .invitation-subtitle {
+        font-size: 14px;
+    }
+
+    .detail-value {
+        font-size: 15px;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    #invitation-card {
+        padding: 20px 24px;
+    }
+
+    .couple-names .name {
+        font-size: 36px;
+    }
+}
