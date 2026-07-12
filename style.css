@@ -207,14 +207,13 @@ img {
     inset: 0;
     z-index: 50;
     background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
     opacity: 0;
     pointer-events: none;
     transition: opacity 1s ease;
-    overflow-y: auto;
-    padding: 40px 20px;
+    overflow: hidden;
+    padding: 24px;
 }
 
 #invitation-scene.visible {
@@ -222,32 +221,164 @@ img {
     pointer-events: auto;
 }
 
+#invitation-scene.website-visible {
+    place-items: start center;
+    overflow-y: auto;
+}
 
-/* ================================================
-   INVITATION CARD
-   ================================================ */
-#invitation-card {
-    text-align: center;
-    max-width: 620px;
+#confetti-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
     width: 100%;
-    padding: 60px 40px;
+    height: 100%;
+    pointer-events: none;
+}
+
+#scratch-card {
+    position: relative;
+    grid-area: 1 / 1;
+    z-index: 2;
+    width: min(88vw, calc(88vh * 16 / 9), 900px);
+    aspect-ratio: 16 / 9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px) scale(0.98);
+    transition:
+        opacity 0.9s ease,
+        transform 0.9s ease,
+        filter 0.9s ease;
+}
+
+#scratch-card::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64%;
+    aspect-ratio: 1019 / 1080;
+    background: url("images/AdobeStock_2045221756 1.png") center / contain no-repeat;
+    transform: translate(-50%, -47%);
+    opacity: 0.95;
+    z-index: -1;
+}
+
+#scratch-card.animate-in {
+    animation: scratchSceneIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes scratchSceneIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+#guess-title {
+    width: min(34vw, 340px);
+    min-width: 190px;
+    height: auto;
+    margin-bottom: clamp(12px, 1.7vw, 24px);
+}
+
+#heart-stage {
+    position: relative;
+    width: min(56vw, 540px);
+    aspect-ratio: 1012 / 552;
+    touch-action: none;
+}
+
+#white-heart {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.96;
+    filter: drop-shadow(0 12px 18px rgba(244, 102, 170, 0.16));
+}
+
+#scratch-canvas {
+    position: absolute;
+    left: 29.4%;
+    top: 16%;
+    width: 41.2%;
+    aspect-ratio: 416 / 365;
+    cursor: grab;
+    touch-action: none;
+    filter: drop-shadow(0 10px 14px rgba(255, 94, 104, 0.2));
+}
+
+#scratch-canvas:active {
+    cursor: grabbing;
+}
+
+#scratch-card.revealed #scratch-canvas {
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    pointer-events: none;
+}
+
+#scratch-card.revealed #white-heart {
+    animation: heartRevealPop 0.7s cubic-bezier(0.2, 1.35, 0.42, 1) both;
+}
+
+#scratch-card.vanish {
     animation: none;
+    opacity: 0;
+    transform: translateY(-18px) scale(0.94);
+    filter: blur(8px);
+    pointer-events: none;
 }
 
-#invitation-card.animate-in {
-    animation: cardFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+@keyframes heartRevealPop {
+    0% {
+        transform: scale(0.96);
+    }
+
+    70% {
+        transform: scale(1.04);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
-@keyframes cardFadeIn {
+#website-content {
+    position: relative;
+    grid-area: 1 / 1;
+    z-index: 3;
+    display: none;
+    width: 100%;
+    min-height: 100%;
+    padding: 40px 20px;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(28px);
+}
+
+#website-content.visible {
+    display: flex;
+    animation: websiteFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes websiteFadeIn {
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Ornaments */
+#invitation-card {
+    text-align: center;
+    max-width: 620px;
+    width: 100%;
+    padding: 60px 40px;
+}
+
 .ornament-top,
 .ornament-bottom {
     font-size: 28px;
@@ -261,7 +392,6 @@ img {
     margin-bottom: 0;
 }
 
-/* Subtitle */
 .invitation-subtitle {
     font-family: 'Playfair Display', serif;
     font-style: italic;
@@ -271,7 +401,6 @@ img {
     letter-spacing: 1px;
 }
 
-/* Label */
 .invitation-label {
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
@@ -282,7 +411,6 @@ img {
     margin-bottom: 24px;
 }
 
-/* Couple Names */
 .couple-names {
     font-family: 'Great Vibes', cursive;
     display: flex;
@@ -306,7 +434,6 @@ img {
     color: #c9a84c;
 }
 
-/* Divider */
 .divider {
     display: flex;
     align-items: center;
@@ -327,7 +454,6 @@ img {
     color: #c9a84c;
 }
 
-/* Event Details */
 .event-details {
     display: flex;
     flex-direction: column;
@@ -363,7 +489,6 @@ img {
     color: #8a7d6b;
 }
 
-/* RSVP */
 .rsvp-text {
     font-family: 'Playfair Display', serif;
     font-style: italic;
@@ -379,12 +504,24 @@ img {
     the wrapper-based cover approach)
    ================================================ */
 @media (max-width: 768px) {
-    .couple-names .name {
-        font-size: 40px;
+    #scratch-card {
+        width: min(96vw, 740px);
+    }
+
+    #scratch-card::before {
+        width: 88%;
+    }
+
+    #heart-stage {
+        width: min(88vw, 520px);
     }
 
     #invitation-card {
         padding: 40px 24px;
+    }
+
+    .couple-names .name {
+        font-size: 40px;
     }
 
     .detail-value {
@@ -393,6 +530,10 @@ img {
 }
 
 @media (max-width: 420px) {
+    #guess-title {
+        min-width: 170px;
+    }
+
     .couple-names .name {
         font-size: 34px;
     }
@@ -407,6 +548,20 @@ img {
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
+    #guess-title {
+        width: min(25vw, 280px);
+        min-width: 160px;
+        margin-bottom: 8px;
+    }
+
+    #heart-stage {
+        width: min(48vw, 440px);
+    }
+
+    #website-content {
+        padding: 20px;
+    }
+
     #invitation-card {
         padding: 20px 24px;
     }

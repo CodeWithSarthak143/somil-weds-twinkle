@@ -52,45 +52,71 @@
         </div>
     </div>
 
-    <!-- ===== INVITATION SCENE: Revealed after doors open ===== -->
+    <!-- ===== INVITATION SCENE: Scratch reveal after doors open ===== -->
     <div id="invitation-scene">
-        <div id="invitation-card">
-            <div class="ornament-top">✦</div>
-            <p class="invitation-subtitle">You are cordially invited to</p>
-            <p class="invitation-label">THE WEDDING CELEBRATION OF</p>
-            <h1 class="couple-names">
-                <span class="name">Somil</span>
-                <span class="ampersand">&</span>
-                <span class="name">Twinkle</span>
-            </h1>
-            <div class="divider">
-                <span class="divider-line"></span>
-                <span class="divider-diamond">◆</span>
-                <span class="divider-line"></span>
+        <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+        <div id="scratch-card" aria-live="polite">
+            <img
+                id="guess-title"
+                src="images/Guess the dates.png"
+                alt="Guess the dates"
+                draggable="false"
+            >
+
+            <div id="heart-stage">
+                <img
+                    id="white-heart"
+                    src="images/AdobeStock_2068356440 1.png"
+                    alt="12th December 2026"
+                    draggable="false"
+                >
+                <canvas
+                    id="scratch-canvas"
+                    aria-label="Scratch here to reveal the wedding date"
+                ></canvas>
             </div>
-            <div class="event-details">
-                <div class="detail-block">
-                    <span class="detail-label">Date</span>
-                    <span class="detail-value">Saturday, December 12, 2026</span>
-                </div>
-                <div class="detail-block">
-                    <span class="detail-label">Time</span>
-                    <span class="detail-value">7:00 PM Onwards</span>
-                </div>
-                <div class="detail-block">
-                    <span class="detail-label">Venue</span>
-                    <span class="detail-value">Pearl Blue Hotel & Resort</span>
-                    <span class="detail-sub">Raisen Road, Bhopal</span>
-                </div>
-            </div>
-            <div class="divider">
-                <span class="divider-line"></span>
-                <span class="divider-diamond">◆</span>
-                <span class="divider-line"></span>
-            </div>
-            <p class="rsvp-text">We request the honour of your presence</p>
-            <div class="ornament-bottom">✦</div>
         </div>
+
+        <main id="website-content" aria-label="Wedding invitation details">
+            <div id="invitation-card">
+                <div class="ornament-top">&#10022;</div>
+                <p class="invitation-subtitle">You are cordially invited to</p>
+                <p class="invitation-label">THE WEDDING CELEBRATION OF</p>
+                <h1 class="couple-names">
+                    <span class="name">Somil</span>
+                    <span class="ampersand">&amp;</span>
+                    <span class="name">Twinkle</span>
+                </h1>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <span class="divider-diamond">&#9670;</span>
+                    <span class="divider-line"></span>
+                </div>
+                <div class="event-details">
+                    <div class="detail-block">
+                        <span class="detail-label">Date</span>
+                        <span class="detail-value">Saturday, December 12, 2026</span>
+                    </div>
+                    <div class="detail-block">
+                        <span class="detail-label">Time</span>
+                        <span class="detail-value">7:00 PM Onwards</span>
+                    </div>
+                    <div class="detail-block">
+                        <span class="detail-label">Venue</span>
+                        <span class="detail-value">Pearl Blue Hotel &amp; Resort</span>
+                        <span class="detail-sub">Raisen Road, Bhopal</span>
+                    </div>
+                </div>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <span class="divider-diamond">&#9670;</span>
+                    <span class="divider-line"></span>
+                </div>
+                <p class="rsvp-text">We request the honour of your presence</p>
+                <div class="ornament-bottom">&#10022;</div>
+            </div>
+        </main>
     </div>
 
     <script src="script.js"></script>
