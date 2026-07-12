@@ -15,6 +15,9 @@
     const scratchCanvas  = document.getElementById('scratch-canvas');
     const confettiCanvas = document.getElementById('confetti-canvas');
     const websiteContent = document.getElementById('website-content');
+    const videoScene     = document.getElementById('video-scene');
+    const weddingVideo   = document.getElementById('wedding-video');
+    const backgroundMusic = document.getElementById('background-music');
 
     const scratchCtx = scratchCanvas.getContext('2d', { willReadFrequently: true });
     const confettiCtx = confettiCanvas.getContext('2d');
@@ -29,6 +32,7 @@
     let scratchCheckFrame = 0;
     let confettiPieces = [];
     let confettiAnimation = 0;
+    let musicPrimed = false;
 
     function fitCanvasToDisplaySize(canvas, ctx) {
         const rect = canvas.getBoundingClientRect();
@@ -114,6 +118,7 @@
     function startScratch(event) {
         if (!scratchReady || isRevealed) return;
         event.preventDefault();
+        primeBackgroundMusic();
         isScratching = true;
         lastPoint = getScratchPoint(event);
         eraseAt(lastPoint);
@@ -140,7 +145,40 @@
         isScratching = false;
         scratchCard.classList.add('revealed');
         launchConfetti();
+        playBackgroundMusic();
         showWebsiteAfterReveal();
+    }
+
+    function playBackgroundMusic() {
+        if (!backgroundMusic || !backgroundMusic.paused) return;
+
+        backgroundMusic.muted = false;
+        backgroundMusic.volume = 0.8;
+        const playback = backgroundMusic.play();
+        if (playback && typeof playback.catch === 'function') {
+            playback.catch(() => {});
+        }
+    }
+
+    function primeBackgroundMusic() {
+        if (!backgroundMusic || musicPrimed) return;
+        musicPrimed = true;
+
+        backgroundMusic.volume = 0;
+        const playback = backgroundMusic.play();
+        if (playback && typeof playback.then === 'function') {
+            playback
+                .then(() => {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0;
+                    backgroundMusic.volume = 0.8;
+                })
+                .catch(() => {
+                    backgroundMusic.volume = 0.8;
+                });
+        } else {
+            backgroundMusic.volume = 0.8;
+        }
     }
 
     function showWebsiteAfterReveal() {
@@ -149,9 +187,22 @@
         }, 1800);
 
         setTimeout(() => {
-            inviteScene.classList.add('website-visible');
-            websiteContent.classList.add('visible');
+            playWeddingVideo();
         }, 2500);
+    }
+
+    function playWeddingVideo() {
+        videoScene.classList.add('visible');
+        weddingVideo.currentTime = 0;
+        weddingVideo.muted = true;
+
+        const playback = weddingVideo.play();
+        if (playback && typeof playback.catch === 'function') {
+            playback.catch(() => {
+                weddingVideo.muted = true;
+                weddingVideo.play();
+            });
+        }
     }
 
     function resizeConfettiCanvas() {
@@ -263,6 +314,13 @@
     window.addEventListener('resize', function () {
         resizeConfettiCanvas();
         drawScratchLayer();
+    });
+
+    weddingVideo.addEventListener('ended', function () {
+        weddingVideo.pause();
+        if (Number.isFinite(weddingVideo.duration)) {
+            weddingVideo.currentTime = Math.max(0, weddingVideo.duration - 0.05);
+        }
     });
 
     resizeConfettiCanvas();
