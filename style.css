@@ -504,16 +504,35 @@ img {
     the wrapper-based cover approach)
    ================================================ */
 @media (max-width: 768px) {
+    #invitation-scene {
+        padding: 16px;
+    }
+
     #scratch-card {
-        width: min(96vw, 740px);
+        width: 100%;
+        min-height: calc(100svh - 32px);
+        aspect-ratio: auto;
+        justify-content: center;
     }
 
     #scratch-card::before {
-        width: 88%;
+        width: min(96vw, 520px);
+        transform: translate(-50%, -45%);
+    }
+
+    #guess-title {
+        width: min(72vw, 300px);
+        min-width: 0;
+        margin-bottom: 14px;
     }
 
     #heart-stage {
-        width: min(88vw, 520px);
+        width: min(92vw, 520px);
+    }
+
+    #website-content {
+        min-height: calc(100svh - 32px);
+        padding: 24px 12px;
     }
 
     #invitation-card {
@@ -531,7 +550,7 @@ img {
 
 @media (max-width: 420px) {
     #guess-title {
-        min-width: 170px;
+        width: min(76vw, 270px);
     }
 
     .couple-names .name {
