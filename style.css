@@ -527,7 +527,6 @@ img {
         height: 100svh;
         object-fit: cover;
         object-position: center top;
-        transform: scale(1.04);
     }
 
     #scratch-card {
