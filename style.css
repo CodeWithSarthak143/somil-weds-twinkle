@@ -518,13 +518,15 @@ img {
 
     #video-scene {
         min-height: 100svh;
+        /* Keep the video frame anchored to the viewport's top edge. */
+        place-items: start center;
     }
 
     #wedding-video {
         width: 100vw;
         height: 100svh;
         object-fit: contain;
-        object-position: center center;
+        object-position: center top;
     }
 
     #scratch-card {
