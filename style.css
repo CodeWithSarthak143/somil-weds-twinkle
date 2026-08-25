@@ -120,6 +120,151 @@ body {
     }
 }
 
+/* Hand Union Animations & Second Screen Layout */
+.hand-union-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 6; /* Sit in front of mountains/temple/trees */
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hand {
+    position: absolute;
+    width: clamp(250px, 35vw, 550px);
+    height: auto;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.shiva-hand {
+    left: -40vw; /* Hidden left initially */
+    transform: translateY(15vh); /* Come in from slightly lower/upwards */
+}
+
+.parvati-hand {
+    right: -40vw; /* Hidden right initially */
+    transform: translateY(15vh);
+}
+
+/* Shine Flash Effect */
+.shine-flash {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,215,0,0.8) 25%, rgba(255,215,0,0) 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    z-index: 7;
+    pointer-events: none;
+}
+
+.shine-flash.activate {
+    animation: flashShineAnim 1.2s forwards;
+}
+
+@keyframes flashShineAnim {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1.8);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2.5);
+    }
+}
+
+/* Save the Dates Reveal Card */
+.save-dates-card {
+    position: absolute;
+    z-index: 8;
+    text-align: center;
+    color: #ffffff;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 12px;
+    background: rgba(13, 15, 18, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.save-dates-card.reveal {
+    opacity: 1;
+    transform: translateY(-20px); /* Center upwards area */
+}
+
+.save-dates-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: normal;
+    color: #ffd700;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.save-dates-card .date-highlight {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    color: #ffffff;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Continuous Horizontal Scrolling Lotus Scroller */
+.lotus-scroller-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 9;
+    background: linear-gradient(to top, rgba(13, 15, 18, 0.8) 0%, rgba(13, 15, 18, 0) 100%);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.lotus-track {
+    display: flex;
+    width: calc(120px * 24); /* Ensure it overflows and repeats smoothly */
+    animation: scrollLotus 25s linear infinite;
+}
+
+.lotus-item {
+    width: 60px;
+    height: 60px;
+    margin: 0 30px;
+    background-image: url('images/Arm_holding_blooming_lotus_flower_202608252038-Photoroom.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 2px 5px rgba(255, 105, 180, 0.4));
+}
+
+@keyframes scrollLotus {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-120px * 12)); /* Shift by half of repeated items to loop seamlessly */
+    }
+}
+
 /* Details Section Styling */
 .content-section {
     position: relative;
