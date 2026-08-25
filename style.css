@@ -17,7 +17,7 @@ body {
 /* Scroll wrapper to create scrollable space */
 .scroll-wrapper {
     position: relative;
-    height: 220vh; /* Set taller height to provide scroll track space for sticky panel */
+    height: 300vh; /* One screen for parallax, one screen for the hand union */
 }
 
 /* Parallax Wrapper (Sticky to hold view during transitions) */
@@ -164,27 +164,6 @@ body {
     right: 0;
     top: 30%;
     transform: translate(45vw, 10vh);
-}
-
-/* Wiggle animations for hands as they meet */
-@keyframes shivaWiggle {
-    0%, 100% { transform: translateY(10vh) rotate(0deg); }
-    25% { transform: translateY(10vh) rotate(-2deg) translateX(5px); }
-    75% { transform: translateY(10vh) rotate(2deg) translateX(-5px); }
-}
-
-@keyframes parvatiWiggle {
-    0%, 100% { transform: translateY(10vh) rotate(0deg); }
-    25% { transform: translateY(10vh) rotate(-2deg) translateX(-5px); }
-    75% { transform: translateY(10vh) rotate(2deg) translateX(5px); }
-}
-
-.hand-union-container.active-wiggle .shiva-hand {
-    animation: shivaWiggle 1.5s ease-in-out infinite alternate;
-}
-
-.hand-union-container.active-wiggle .parvati-hand {
-    animation: parvatiWiggle 1.5s ease-in-out infinite alternate;
 }
 
 /* Shine Flash Effect */

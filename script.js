@@ -12,9 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let flashTriggered = false;
 
-    window.addEventListener('scroll', () => {
+    function updateScene() {
         const scrollValue = window.scrollY;
         const windowHeight = window.innerHeight;
+        const parallaxScroll = Math.min(scrollValue, windowHeight);
 
         // --- Screen 1 Parallax Animations ---
         // Background Deities (remains static, does not go down)
@@ -24,42 +25,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mountains: offset by baseline (15% height translation) + scrolls up relative to viewport
         if (layerMountains) {
-            layerMountains.style.transform = `translateY(calc(15% - ${scrollValue * 0.1}px))`;
+            layerMountains.style.transform = `translateY(calc(15% - ${parallaxScroll * 0.1}px))`;
         }
 
         // Temple: starts low (80vh translation) and scrolls up much faster to land on the screen
         if (layerTemple) {
-            layerTemple.style.transform = `translateY(calc(80vh - ${scrollValue * 0.9}px))`;
+            layerTemple.style.transform = `translateY(calc(80vh - ${parallaxScroll * 0.9}px))`;
         }
 
         // Trees (foreground layer)
         if (layerTrees) {
-            layerTrees.style.transform = `translateY(${scrollValue * 0.02}px)`;
+            layerTrees.style.transform = `translateY(${parallaxScroll * 0.02}px)`;
         }
 
         // Main overlay text (fades and moves up relative to its bottom: 15% origin)
         if (overlayText) {
-            overlayText.style.transform = `translate(-50%, ${-scrollValue * 0.4}px)`;
-            overlayText.style.opacity = Math.max(0, 1 - scrollValue / 300);
+            overlayText.style.transform = `translate(-50%, ${-parallaxScroll * 0.4}px)`;
+            overlayText.style.opacity = Math.max(0, 1 - parallaxScroll / 300);
         }
 
-        // --- Screen 2 Hand Union Scrolling Animations ---
-        // Second Screen triggers between 50px and 450px scroll depth so hands meet on the second screen.
-        const startScroll = 50;
-        const endScroll = 450;
-        const handUnionContainer = document.getElementById('hand-union-container');
+        // --- Screen 2 Hand Union Animation ---
+        // Keep the first viewport exclusively for the parallax. The hands begin only
+        // after that sequence has completed, then have most of the second viewport to meet.
+        const startScroll = windowHeight;
+        const endScroll = windowHeight * 1.85;
 
-        if (scrollValue > startScroll) {
+        if (scrollValue >= startScroll) {
             const progress = Math.min(1, (scrollValue - startScroll) / (endScroll - startScroll));
-
-            if (handUnionContainer) {
-                // Add wiggle class when hands are active and moving, remove it when fully joined
-                if (progress > 0 && progress < 1) {
-                    handUnionContainer.classList.add('active-wiggle');
-                } else {
-                    handUnionContainer.classList.remove('active-wiggle');
-                }
-            }
 
             // Shiva Hand (moves from left to center first)
             // It starts immediately at 0% scroll progress and reaches center by 60% progress
@@ -107,10 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         } else {
-            // Under threshold: hide hands
-            if (handUnionContainer) {
-                handUnionContainer.classList.remove('active-wiggle');
-            }
+            // During the parallax screen: keep both hands completely off-screen.
             if (shivaHand) {
                 shivaHand.style.opacity = 0;
                 shivaHand.style.transform = 'translate(-45vw, 10vh)';
@@ -129,5 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-    });
+    }
+
+    window.addEventListener('scroll', updateScene, { passive: true });
+    window.addEventListener('resize', updateScene);
+    updateScene();
 });
