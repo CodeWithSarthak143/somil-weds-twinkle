@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function playAudioOnInteraction() {
         if (bgMusic && bgMusic.paused) {
             bgMusic.play().then(() => {
+                console.log('Music started successfully.');
                 // Remove listeners once playback starts successfully
                 window.removeEventListener('click', playAudioOnInteraction);
                 window.removeEventListener('touchstart', playAudioOnInteraction);
@@ -26,9 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.addEventListener('click', playAudioOnInteraction);
-    window.addEventListener('touchstart', playAudioOnInteraction);
-    window.addEventListener('scroll', playAudioOnInteraction);
+    // Try playing immediately
+    if (bgMusic) {
+        bgMusic.play().then(() => {
+            console.log('Music autoplayed on load.');
+        }).catch(() => {
+            console.log('Autoplay blocked. Registering interaction listeners.');
+            window.addEventListener('click', playAudioOnInteraction);
+            window.addEventListener('touchstart', playAudioOnInteraction);
+            window.addEventListener('scroll', playAudioOnInteraction);
+        });
+    }
 
     function updateScene() {
         const scrollValue = window.scrollY;
