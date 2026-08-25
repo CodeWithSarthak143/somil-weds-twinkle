@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 parvatiHand.style.opacity = progress;
                 const currentRight = -45 + (progress * 33);
                 const currentY = 10 - (progress * 5);
-                parvatiHand.style.transform = `translate(${currentRight}vw, ${currentY}vh) scaleX(-1)`;
+                parvatiHand.style.transform = `translate(${currentRight}vw, ${currentY}vh)`;
             }
 
             // If progress hits 100%, hands are joined. Trigger flash and display card.

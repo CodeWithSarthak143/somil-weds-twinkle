@@ -162,9 +162,9 @@ body {
 }
 
 @keyframes parvatiWiggle {
-    0%, 100% { transform: translateY(10vh) scaleX(-1) rotate(0deg); }
-    25% { transform: translateY(10vh) scaleX(-1) rotate(-2deg) translateX(-5px); }
-    75% { transform: translateY(10vh) scaleX(-1) rotate(2deg) translateX(5px); }
+    0%, 100% { transform: translateY(10vh) rotate(0deg); }
+    25% { transform: translateY(10vh) rotate(-2deg) translateX(-5px); }
+    75% { transform: translateY(10vh) rotate(2deg) translateX(5px); }
 }
 
 .hand-union-container.active-wiggle .shiva-hand {
