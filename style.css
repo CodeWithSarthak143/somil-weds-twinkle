@@ -49,12 +49,14 @@ body {
 
 .layer-temple {
     z-index: 2;
-    transform-origin: bottom center;
+    transform: translateY(80vh); /* Start temple lower down so it appears on the second screen/scroll */
+    will-change: transform;
 }
 
 .layer-mountains {
     z-index: 3;
-    transform-origin: bottom center;
+    transform: translateY(15%); /* Push mountains down slightly to prevent covering text or deities */
+    will-change: transform;
 }
 
 .layer-trees {
@@ -63,12 +65,15 @@ body {
 
 /* Overlay Headline Text */
 .parallax-overlay-text {
-    position: relative;
+    position:absolute;
+    bottom: 15%; /* Align text lower down so it does not overlap Shiv Parvati on clouds */
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 5;
     text-align: center;
     color: #fff;
     text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-    transform: translateY(-50px);
+    width: 90%;
 }
 
 .parallax-overlay-text .subtitle {

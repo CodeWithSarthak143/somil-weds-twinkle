@@ -8,31 +8,30 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         const scrollValue = window.scrollY;
 
-        // Perform translate transformations based on scroll speed ratios
-        // Background Deities (moves very slowly downward to stay visible)
+        // Background Deities (moves slowly downward to stay visible)
         if (layerBg) {
             layerBg.style.transform = `translateY(${scrollValue * 0.4}px)`;
         }
 
-        // Midground Snowy Peaks (moves moderately slowly)
+        // Mountains: offset by baseline (15% height translation) + scrolls up relative to viewport
         if (layerMountains) {
-            layerMountains.style.transform = `translateY(${scrollValue * 0.25}px)`;
+            layerMountains.style.transform = `translateY(calc(15% - ${scrollValue * 0.1}px))`;
         }
 
-        // Temple (moves slightly slower than mountains)
+        // Temple: starts low (80vh translation) and scrolls up much faster to land on the screen
         if (layerTemple) {
-            layerTemple.style.transform = `translateY(${scrollValue * 0.12}px)`;
+            layerTemple.style.transform = `translateY(calc(80vh - ${scrollValue * 0.9}px))`;
         }
 
-        // Trees (foreground layer, stays static or moves very little to anchor page transition)
+        // Trees (foreground layer)
         if (layerTrees) {
             layerTrees.style.transform = `translateY(${scrollValue * 0.02}px)`;
         }
 
-        // Main overlay text (moves fast upward and fades out)
+        // Main overlay text (fades and moves up relative to its bottom: 15% origin)
         if (overlayText) {
-            overlayText.style.transform = `translateY(${-scrollValue * 0.6}px)`;
-            overlayText.style.opacity = Math.max(0, 1 - scrollValue / 400);
+            overlayText.style.transform = `translate(-50%, ${-scrollValue * 0.4}px)`;
+            overlayText.style.opacity = Math.max(0, 1 - scrollValue / 300);
         }
     });
 });
