@@ -47,12 +47,12 @@ body {
     z-index: 1;
 }
 
-.layer-mountains {
+.layer-temple {
     z-index: 2;
     transform-origin: bottom center;
 }
 
-.layer-temple {
+.layer-mountains {
     z-index: 3;
     transform-origin: bottom center;
 }
