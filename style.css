@@ -1,612 +1,235 @@
-/* ================================================
-   RESET & BASE STYLES
-   ================================================ */
-*,
-*::before,
-*::after {
+/* Base Reset */
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #ffffff;
+    background-color: #0d0f12;
+    color: #e5e9f0;
     font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
-img {
-    display: block;
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
-
-/* ================================================
-   INTRO SCENE — Palace Facade + Doors
-   ================================================ */
-#intro-scene {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffffff;
-    overflow: hidden;
-    transition: opacity 0.8s ease;
-}
-
-#intro-scene.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/*
-   The facade wrapper sizes itself to COVER the viewport
-   while maintaining the original image aspect ratio (1920:1080 = 16:9).
-   This way, door positions as percentages map directly to the
-   original image coordinates — no guessing per breakpoint.
-*/
-#facade-wrapper {
+/* Parallax Wrapper */
+.parallax-container {
     position: relative;
-    flex-shrink: 0;
-    /* Never squeeze — overflow and crop instead */
-    /* Cover the viewport: whichever dimension is limiting, use the bigger calc */
-    width: max(100vw, calc(100vh * 1920 / 1080));
-    height: max(100vh, calc(100vw * 1080 / 1920));
-    /* Zoom origin = center of the archway opening in the image (~50% x, ~46% y) */
-    transform-origin: 50% 46%;
-    transition: transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: transform;
-}
-
-#facade-wrapper.zooming {
-    transform: scale(6);
-}
-
-/* The image fills the wrapper exactly — no object-fit needed */
-#facade-img {
     width: 100%;
-    height: 100%;
-}
-
-
-/* ================================================
-   DOOR CONTAINER — Overlaid on the archway
-   ================================================
-   Percentages are relative to the original 1920x1080 image.
-   Archway opening measured from the image:
-     Center X   = 50%
-     Top edge   ~ 165px  -> 15.3%
-     Width      ~ 520px  -> 27.1%
-     Height     ~ 760px  -> 70.4%
-   ------------------------------------------------ */
-#door-container {
-    position: absolute;
-    top: 28%;
-    left: 50.3%;
-    transform: translateX(-50%);
-    width: 27.1%;
-    height: 65%;
-    cursor: pointer;
-    z-index: 10;
-}
-
-#door-perspective {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    perspective: 1200px;
-}
-
-
-/* ================================================
-   DOOR PANELS — 3D Swing Open
-   ================================================ */
-.door-panel {
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    transition: transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-    backface-visibility: hidden;
-}
-
-.door-panel img {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-}
-
-#door-left {
-    transform-origin: left center;
-}
-
-#door-right {
-    transform-origin: right center;
-}
-
-/* When doors are open */
-#door-left.open {
-    transform: rotateY(-105deg);
-}
-
-#door-right.open {
-    transform: rotateY(105deg);
-}
-
-
-/* ================================================
-   TAP HINT — Pulsing glow on the door
-   ================================================ */
-#tap-hint {
-    position: absolute;
-    bottom: 18%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 20;
-    animation: tapPulse 2s ease-in-out infinite;
-    pointer-events: none;
-}
-
-#tap-hint.hidden {
-    display: none;
-}
-
-#tap-hint-img {
-    width: clamp(76px, 8vw, 120px);
-    height: auto;
-}
-
-@keyframes tapPulse {
-
-    0%,
-    100% {
-        opacity: 0.7;
-        transform: translateX(-50%) scale(1);
-    }
-
-    50% {
-        opacity: 1;
-        transform: translateX(-50%) scale(1.08);
-    }
-}
-
-
-/* ================================================
-   INVITATION SCENE — Revealed after zoom
-   ================================================ */
-#invitation-scene {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    background: #ffffff;
-    display: grid;
-    place-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1s ease;
-    overflow: hidden;
-    padding: 24px;
-}
-
-#invitation-scene.visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-#invitation-scene.website-visible {
-    place-items: start center;
-    overflow-y: auto;
-}
-
-#confetti-canvas {
-    position: fixed;
-    inset: 0;
-    z-index: 4;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-#scratch-card {
-    position: relative;
-    grid-area: 1 / 1;
-    z-index: 2;
-    width: min(88vw, calc(88vh * 16 / 9), 900px);
-    aspect-ratio: 16 / 9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(24px) scale(0.98);
-    transition:
-        opacity 0.9s ease,
-        transform 0.9s ease,
-        filter 0.9s ease;
-}
-
-#scratch-card::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 64%;
-    aspect-ratio: 1019 / 1080;
-    background: url("images/AdobeStock_2045221756 1.png") center / contain no-repeat;
-    transform: translate(-50%, -47%);
-    opacity: 0.95;
-    z-index: -1;
-}
-
-#scratch-card.animate-in {
-    animation: scratchSceneIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-@keyframes scratchSceneIn {
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-#guess-title {
-    width: min(34vw, 340px);
-    min-width: 190px;
-    height: auto;
-    margin-bottom: clamp(12px, 1.7vw, 24px);
-}
-
-#heart-stage {
-    position: relative;
-    width: min(56vw, 540px);
-    aspect-ratio: 1012 / 552;
-    touch-action: none;
-}
-
-#white-heart {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    opacity: 0.96;
-    filter: drop-shadow(0 12px 18px rgba(244, 102, 170, 0.16));
-}
-
-#scratch-canvas {
-    position: absolute;
-    left: 29.4%;
-    top: 16%;
-    width: 41.2%;
-    aspect-ratio: 416 / 365;
-    cursor: grab;
-    touch-action: none;
-    filter: drop-shadow(0 10px 14px rgba(255, 94, 104, 0.2));
-}
-
-#scratch-canvas:active {
-    cursor: grabbing;
-}
-
-#scratch-card.revealed #scratch-canvas {
-    opacity: 0;
-    transition: opacity 0.45s ease;
-    pointer-events: none;
-}
-
-#scratch-card.revealed #white-heart {
-    animation: heartRevealPop 0.7s cubic-bezier(0.2, 1.35, 0.42, 1) both;
-}
-
-#scratch-card.vanish {
-    animation: none;
-    opacity: 0;
-    transform: translateY(-18px) scale(0.94);
-    filter: blur(8px);
-    pointer-events: none;
-}
-
-#video-scene {
-    position: fixed;
-    inset: 0;
-    z-index: 3;
-    display: none;
-    place-items: center;
-    background: #ffffff;
-    opacity: 0;
-    overflow: hidden;
-}
-
-#video-scene.visible {
-    display: grid;
-    animation: videoSceneIn 0.8s ease forwards;
-}
-
-@keyframes videoSceneIn {
-    to {
-        opacity: 1;
-    }
-}
-
-#wedding-video {
-    width: 100vw;
     height: 100vh;
-    object-fit: cover;
-    object-position: center center;
-    background: #ffffff;
-}
-
-@keyframes heartRevealPop {
-    0% {
-        transform: scale(0.96);
-    }
-
-    70% {
-        transform: scale(1.04);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-#website-content {
-    position: relative;
-    grid-area: 1 / 1;
-    z-index: 5;
-    display: none;
-    width: 100%;
-    min-height: 100%;
-    padding: 40px 20px;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(28px);
-}
-
-#website-content.visible {
+    overflow: hidden;
     display: flex;
-    animation: websiteFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    justify-content: center;
+    align-items: center;
+    background-color: #0b0d10;
 }
 
-@keyframes websiteFadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-#invitation-card {
-    text-align: center;
-    max-width: 620px;
+.parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 60px 40px;
+    height: 100%;
+    pointer-events: none;
+    will-change: transform;
 }
 
-.ornament-top,
-.ornament-bottom {
-    font-size: 28px;
-    color: #c9a84c;
-    letter-spacing: 10px;
-    margin-bottom: 20px;
+.parallax-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
-.ornament-bottom {
-    margin-top: 20px;
-    margin-bottom: 0;
+/* Specific Layer Adjustments to enhance the overlap feel */
+.layer-bg {
+    z-index: 1;
 }
 
-.invitation-subtitle {
+.layer-mountains {
+    z-index: 2;
+    transform-origin: bottom center;
+}
+
+.layer-temple {
+    z-index: 3;
+    transform-origin: bottom center;
+}
+
+.layer-trees {
+    z-index: 4;
+}
+
+/* Overlay Headline Text */
+.parallax-overlay-text {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    transform: translateY(-50px);
+}
+
+.parallax-overlay-text .subtitle {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 16px;
-    color: #8a7d6b;
-    margin-bottom: 8px;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    color: #ffd700;
+}
+
+.parallax-overlay-text h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 5rem;
+    font-weight: normal;
+    color: #fff;
+    margin-bottom: 1.5rem;
     letter-spacing: 1px;
 }
 
-.invitation-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 4px;
+.parallax-overlay-text .scroll-prompt {
+    font-size: 0.85rem;
     text-transform: uppercase;
-    color: #b8a07a;
-    margin-bottom: 24px;
+    letter-spacing: 5px;
+    opacity: 0.7;
+    animation: bounce 2s infinite;
 }
 
-.couple-names {
-    font-family: 'Great Vibes', cursive;
+/* Keyframes for scroll prompt */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-8px);
+    }
+    60% {
+        transform: translateY(-4px);
+    }
+}
+
+/* Details Section Styling */
+.content-section {
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(to bottom, #0d0f12, #181c24);
+    padding: 80px 20px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    margin-bottom: 28px;
+    justify-content: center;
 }
 
-.couple-names .name {
-    font-size: 52px;
-    font-weight: 400;
-    color: #3d2e1f;
-    line-height: 1.2;
+.invitation-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 60px 40px;
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.couple-names .ampersand {
+.ornament {
+    font-size: 2rem;
+    color: #ffd700;
+    margin-bottom: 20px;
+}
+
+.invite-pre {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 28px;
-    color: #c9a84c;
+    color: #ffd700;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
 }
 
+.invite-sub {
+    font-size: 0.95rem;
+    color: #b0c4de;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.couple-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4.5rem;
+    color: #ffffff;
+    font-weight: normal;
+    margin: 15px 0;
+}
+
+/* Custom Dividers */
 .divider {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    margin: 24px 0;
+    gap: 15px;
+    margin: 30px 0;
 }
 
-.divider-line {
-    display: block;
-    width: 80px;
+.divider .line {
+    width: 60px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+    background: linear-gradient(90deg, transparent, #ffd700, transparent);
 }
 
-.divider-diamond {
-    font-size: 10px;
-    color: #c9a84c;
+.divider .diamond {
+    color: #ffd700;
+    font-size: 0.8rem;
 }
 
-.event-details {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+/* Event Grid Layout */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin: 35px 0;
 }
 
-.detail-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
+@media (min-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
-.detail-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
+.detail-item h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
     letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #c9a84c;
+    color: #ffd700;
+    margin-bottom: 10px;
 }
 
-.detail-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    color: #3d2e1f;
+.detail-item p {
+    font-size: 0.9rem;
+    color: #e5e9f0;
+    line-height: 1.5;
 }
 
-.detail-sub {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    font-weight: 300;
-    color: #8a7d6b;
+.detail-item p.sub {
+    color: #8892b0;
+    font-size: 0.8rem;
 }
 
-.rsvp-text {
-    font-family: 'Playfair Display', serif;
+.footer-note {
+    font-size: 0.95rem;
     font-style: italic;
-    font-size: 15px;
-    color: #8a7d6b;
-    margin-top: 4px;
+    color: #b0c4de;
+    margin-top: 25px;
 }
 
-
-/* ================================================
-   RESPONSIVE — Only invitation text sizing
-   (Door positioning is handled automatically by
-    the wrapper-based cover approach)
-   ================================================ */
-@media (max-width: 768px) {
-    #invitation-scene {
-        padding: 16px;
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .parallax-overlay-text h1 {
+        font-size: 3rem;
     }
-
-    #video-scene {
-        min-height: 100svh;
-        /* Keep the video frame anchored to the viewport's top edge. */
-        place-items: start center;
+    .couple-name {
+        font-size: 3rem;
     }
-
-    #wedding-video {
-        width: 100vw;
-        height: 100svh;
-        object-fit: cover;
-        object-position: center;
-    }
-
-    #scratch-card {
-        width: 100%;
-        min-height: calc(100svh - 32px);
-        aspect-ratio: auto;
-        justify-content: center;
-    }
-
-    #scratch-card::before {
-        width: min(96vw, 520px);
-        transform: translate(-50%, -45%);
-    }
-
-    #guess-title {
-        width: min(72vw, 300px);
-        min-width: 0;
-        margin-bottom: 14px;
-    }
-
-    #heart-stage {
-        width: min(92vw, 520px);
-    }
-
-    #website-content {
-        min-height: calc(100svh - 32px);
-        padding: 24px 12px;
-    }
-
-    #invitation-card {
-        padding: 40px 24px;
-    }
-
-    .couple-names .name {
-        font-size: 40px;
-    }
-
-    .detail-value {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 420px) {
-    #guess-title {
-        width: min(76vw, 270px);
-    }
-
-    .couple-names .name {
-        font-size: 34px;
-    }
-
-    .invitation-subtitle {
-        font-size: 14px;
-    }
-
-    .detail-value {
-        font-size: 15px;
-    }
-}
-
-@media (max-height: 500px) and (orientation: landscape) {
-    #guess-title {
-        width: min(25vw, 280px);
-        min-width: 160px;
-        margin-bottom: 8px;
-    }
-
-    #heart-stage {
-        width: min(48vw, 440px);
-    }
-
-    #website-content {
-        padding: 20px;
-    }
-
-    #invitation-card {
-        padding: 20px 24px;
-    }
-
-    .couple-names .name {
-        font-size: 36px;
+    .invitation-card {
+        padding: 40px 20px;
     }
 }

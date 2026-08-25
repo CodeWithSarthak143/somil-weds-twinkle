@@ -1,327 +1,38 @@
-/**
- * Wedding Website - Door opening, scratch reveal, and confetti.
- */
-(function () {
-    'use strict';
+document.addEventListener('DOMContentLoaded', () => {
+    const layerBg = document.getElementById('layer-bg');
+    const layerMountains = document.getElementById('layer-mountains');
+    const layerTemple = document.getElementById('layer-temple');
+    const layerTrees = document.getElementById('layer-trees');
+    const overlayText = document.getElementById('overlay-text');
 
-    const doorContainer  = document.getElementById('door-container');
-    const doorLeft       = document.getElementById('door-left');
-    const doorRight      = document.getElementById('door-right');
-    const tapHint        = document.getElementById('tap-hint');
-    const facadeWrapper  = document.getElementById('facade-wrapper');
-    const introScene     = document.getElementById('intro-scene');
-    const inviteScene    = document.getElementById('invitation-scene');
-    const scratchCard    = document.getElementById('scratch-card');
-    const scratchCanvas  = document.getElementById('scratch-canvas');
-    const confettiCanvas = document.getElementById('confetti-canvas');
-    const websiteContent = document.getElementById('website-content');
-    const videoScene     = document.getElementById('video-scene');
-    const weddingVideo   = document.getElementById('wedding-video');
-    const backgroundMusic = document.getElementById('background-music');
+    window.addEventListener('scroll', () => {
+        const scrollValue = window.scrollY;
 
-    const scratchCtx = scratchCanvas.getContext('2d', { willReadFrequently: true });
-    const confettiCtx = confettiCanvas.getContext('2d');
-    const redHeart = new Image();
-    redHeart.src = 'images/%23d53636ff.png';
-
-    let isAnimating = false;
-    let scratchReady = false;
-    let isScratching = false;
-    let isRevealed = false;
-    let lastPoint = null;
-    let scratchCheckFrame = 0;
-    let confettiPieces = [];
-    let confettiAnimation = 0;
-    let musicPrimed = false;
-
-    function fitCanvasToDisplaySize(canvas, ctx) {
-        const rect = canvas.getBoundingClientRect();
-        const dpr = window.devicePixelRatio || 1;
-        const width = Math.max(1, Math.round(rect.width * dpr));
-        const height = Math.max(1, Math.round(rect.height * dpr));
-
-        if (canvas.width !== width || canvas.height !== height) {
-            canvas.width = width;
-            canvas.height = height;
+        // Perform translate transformations based on scroll speed ratios
+        // Background Deities (moves very slowly downward to stay visible)
+        if (layerBg) {
+            layerBg.style.transform = `translateY(${scrollValue * 0.4}px)`;
         }
 
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        return rect;
-    }
-
-    function drawScratchLayer() {
-        if (!redHeart.complete || isRevealed) return;
-
-        const rect = fitCanvasToDisplaySize(scratchCanvas, scratchCtx);
-        scratchCtx.globalCompositeOperation = 'source-over';
-        scratchCtx.clearRect(0, 0, rect.width, rect.height);
-        scratchCtx.drawImage(redHeart, 0, 0, rect.width, rect.height);
-
-        scratchCtx.fillStyle = '#ffffff';
-        scratchCtx.textAlign = 'center';
-        scratchCtx.textBaseline = 'middle';
-        scratchCtx.font = `${Math.max(22, rect.width * 0.13)}px "Great Vibes", cursive`;
-        scratchCtx.fillText('Scratch Here', rect.width * 0.5, rect.height * 0.44);
-        scratchCtx.fillText('to find out', rect.width * 0.5, rect.height * 0.61);
-
-        scratchReady = true;
-    }
-
-    function getScratchPoint(event) {
-        const rect = scratchCanvas.getBoundingClientRect();
-        const pointer = event.touches ? event.touches[0] : event;
-
-        return {
-            x: pointer.clientX - rect.left,
-            y: pointer.clientY - rect.top
-        };
-    }
-
-    function eraseAt(point, previousPoint) {
-        const rect = scratchCanvas.getBoundingClientRect();
-        const brush = Math.max(14, rect.width * 0.075);
-
-        scratchCtx.globalCompositeOperation = 'destination-out';
-        scratchCtx.lineCap = 'round';
-        scratchCtx.lineJoin = 'round';
-        scratchCtx.lineWidth = brush;
-
-        scratchCtx.beginPath();
-        if (previousPoint) {
-            scratchCtx.moveTo(previousPoint.x, previousPoint.y);
-            scratchCtx.lineTo(point.x, point.y);
-        } else {
-            scratchCtx.arc(point.x, point.y, brush * 0.5, 0, Math.PI * 2);
+        // Midground Snowy Peaks (moves moderately slowly)
+        if (layerMountains) {
+            layerMountains.style.transform = `translateY(${scrollValue * 0.25}px)`;
         }
-        scratchCtx.stroke();
-        scratchCtx.fill();
-    }
 
-    function checkRevealProgress() {
-        cancelAnimationFrame(scratchCheckFrame);
-
-        scratchCheckFrame = requestAnimationFrame(() => {
-            const pixels = scratchCtx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height).data;
-            let transparent = 0;
-
-            for (let index = 3; index < pixels.length; index += 16) {
-                if (pixels[index] < 20) transparent++;
-            }
-
-            const sampledPixels = pixels.length / 16;
-            if (transparent / sampledPixels > 0.56) {
-                revealHeart();
-            }
-        });
-    }
-
-    function startScratch(event) {
-        if (!scratchReady || isRevealed) return;
-        event.preventDefault();
-        primeBackgroundMusic();
-        isScratching = true;
-        lastPoint = getScratchPoint(event);
-        eraseAt(lastPoint);
-        checkRevealProgress();
-    }
-
-    function moveScratch(event) {
-        if (!isScratching || isRevealed) return;
-        event.preventDefault();
-        const point = getScratchPoint(event);
-        eraseAt(point, lastPoint);
-        lastPoint = point;
-        checkRevealProgress();
-    }
-
-    function stopScratch() {
-        isScratching = false;
-        lastPoint = null;
-    }
-
-    function revealHeart() {
-        if (isRevealed) return;
-        isRevealed = true;
-        isScratching = false;
-        scratchCard.classList.add('revealed');
-        launchConfetti();
-        playBackgroundMusic();
-        showWebsiteAfterReveal();
-    }
-
-    function playBackgroundMusic() {
-        if (!backgroundMusic || !backgroundMusic.paused) return;
-
-        backgroundMusic.muted = false;
-        backgroundMusic.volume = 0.8;
-        const playback = backgroundMusic.play();
-        if (playback && typeof playback.catch === 'function') {
-            playback.catch(() => {});
+        // Temple (moves slightly slower than mountains)
+        if (layerTemple) {
+            layerTemple.style.transform = `translateY(${scrollValue * 0.12}px)`;
         }
-    }
 
-    function primeBackgroundMusic() {
-        if (!backgroundMusic || musicPrimed) return;
-        musicPrimed = true;
-
-        backgroundMusic.volume = 0;
-        const playback = backgroundMusic.play();
-        if (playback && typeof playback.then === 'function') {
-            playback
-                .then(() => {
-                    backgroundMusic.pause();
-                    backgroundMusic.currentTime = 0;
-                    backgroundMusic.volume = 0.8;
-                })
-                .catch(() => {
-                    backgroundMusic.volume = 0.8;
-                });
-        } else {
-            backgroundMusic.volume = 0.8;
+        // Trees (foreground layer, stays static or moves very little to anchor page transition)
+        if (layerTrees) {
+            layerTrees.style.transform = `translateY(${scrollValue * 0.02}px)`;
         }
-    }
 
-    function showWebsiteAfterReveal() {
-        setTimeout(() => {
-            scratchCard.classList.add('vanish');
-        }, 1800);
-
-        setTimeout(() => {
-            playWeddingVideo();
-        }, 2500);
-    }
-
-    function playWeddingVideo() {
-        videoScene.classList.add('visible');
-        weddingVideo.currentTime = 0;
-        weddingVideo.muted = true;
-
-        const playback = weddingVideo.play();
-        if (playback && typeof playback.catch === 'function') {
-            playback.catch(() => {
-                weddingVideo.muted = true;
-                weddingVideo.play();
-            });
-        }
-    }
-
-    function resizeConfettiCanvas() {
-        const dpr = window.devicePixelRatio || 1;
-        confettiCanvas.width = Math.round(window.innerWidth * dpr);
-        confettiCanvas.height = Math.round(window.innerHeight * dpr);
-        confettiCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    function launchConfetti() {
-        const colors = ['#ff6470', '#ff9ecf', '#f7cf54', '#ffffff', '#79d3ff', '#8adf9a'];
-        const originX = window.innerWidth / 2;
-        const originY = window.innerHeight * 0.42;
-
-        resizeConfettiCanvas();
-        confettiPieces = Array.from({ length: 230 }, () => {
-            const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI;
-            const speed = 4 + Math.random() * 8;
-
-            return {
-                x: originX + (Math.random() - 0.5) * 120,
-                y: originY + (Math.random() - 0.5) * 60,
-                vx: Math.cos(angle) * speed + (Math.random() - 0.5) * 2,
-                vy: Math.sin(angle) * speed,
-                gravity: 0.055 + Math.random() * 0.055,
-                drag: 0.992,
-                size: 6 + Math.random() * 9,
-                rotation: Math.random() * Math.PI,
-                spin: (Math.random() - 0.5) * 0.28,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                life: 300 + Math.random() * 150
-            };
-        });
-
-        cancelAnimationFrame(confettiAnimation);
-        animateConfetti();
-    }
-
-    function animateConfetti() {
-        confettiCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-        confettiPieces = confettiPieces.filter((piece) => piece.life > 0);
-        confettiPieces.forEach((piece) => {
-            piece.x += piece.vx;
-            piece.y += piece.vy;
-            piece.vx *= piece.drag;
-            piece.vy = piece.vy * piece.drag + piece.gravity;
-            piece.rotation += piece.spin;
-            piece.life -= 1;
-
-            confettiCtx.save();
-            confettiCtx.translate(piece.x, piece.y);
-            confettiCtx.rotate(piece.rotation);
-            confettiCtx.globalAlpha = Math.min(1, piece.life / 70);
-            confettiCtx.fillStyle = piece.color;
-            confettiCtx.fillRect(-piece.size / 2, -piece.size / 3, piece.size, piece.size * 0.65);
-            confettiCtx.restore();
-        });
-
-        if (confettiPieces.length) {
-            confettiAnimation = requestAnimationFrame(animateConfetti);
-        } else {
-            confettiCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        }
-    }
-
-    function activateScratchScene() {
-        scratchCard.classList.add('animate-in');
-        setTimeout(drawScratchLayer, 250);
-    }
-
-    function openDoors() {
-        if (isAnimating) return;
-        isAnimating = true;
-
-        tapHint.classList.add('hidden');
-        doorLeft.classList.add('open');
-        doorRight.classList.add('open');
-
-        setTimeout(() => {
-            facadeWrapper.classList.add('zooming');
-        }, 600);
-
-        setTimeout(() => {
-            inviteScene.classList.add('visible');
-        }, 1200);
-
-        setTimeout(() => {
-            introScene.classList.add('hidden');
-            activateScratchScene();
-        }, 2600);
-    }
-
-    doorContainer.addEventListener('click', openDoors);
-    doorContainer.addEventListener('touchend', function (event) {
-        event.preventDefault();
-        openDoors();
-    });
-
-    scratchCanvas.addEventListener('mousedown', startScratch);
-    scratchCanvas.addEventListener('mousemove', moveScratch);
-    window.addEventListener('mouseup', stopScratch);
-
-    scratchCanvas.addEventListener('touchstart', startScratch, { passive: false });
-    scratchCanvas.addEventListener('touchmove', moveScratch, { passive: false });
-    window.addEventListener('touchend', stopScratch);
-
-    redHeart.addEventListener('load', drawScratchLayer);
-    window.addEventListener('resize', function () {
-        resizeConfettiCanvas();
-        drawScratchLayer();
-    });
-
-    weddingVideo.addEventListener('ended', function () {
-        weddingVideo.pause();
-        if (Number.isFinite(weddingVideo.duration)) {
-            weddingVideo.currentTime = Math.max(0, weddingVideo.duration - 0.05);
+        // Main overlay text (moves fast upward and fades out)
+        if (overlayText) {
+            overlayText.style.transform = `translateY(${-scrollValue * 0.6}px)`;
+            overlayText.style.opacity = Math.max(0, 1 - scrollValue / 400);
         }
     });
-
-    resizeConfettiCanvas();
-})();
+});

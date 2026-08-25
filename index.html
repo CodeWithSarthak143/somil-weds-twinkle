@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="You are cordially invited to celebrate our wedding. Open the doors to reveal our special day.">
+    <meta name="description" content="You are cordially invited to celebrate our wedding. Experience the divine journey.">
     <title>Somil &amp; Twinkle's Wedding Invite</title>
     <link rel="icon" href="images/Group 105.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,125 +12,73 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <audio
-        id="background-music"
-        src="images/Heri sakhi mangal gao ri  Heri sakhi mangal gao ri ringtone  Bhajan  Aarti  Bakti Ringtone.mp3"
-        preload="auto"
-        loop
-    ></audio>
 
-    <!-- ===== INTRO SCENE: Palace Facade + Doors ===== -->
-    <div id="intro-scene">
-        <!-- The full palace facade background -->
-        <div id="facade-wrapper">
-            <img 
-                id="facade-img" 
-                src="images/Layer 0.png" 
-                alt="Palace Facade" 
-                draggable="false"
-            >
+    <!-- Parallax Section -->
+    <div class="parallax-container">
+        <!-- Layer 1: Background Sky / Deities -->
+        <div class="parallax-layer layer-bg" id="layer-bg">
+            <img src="images/Silhouette_of_deities_in_clouds_202608252010.jpeg" alt="Deities in clouds background">
+        </div>
+        <!-- Layer 2: Snowy Mountain Peaks -->
+        <div class="parallax-layer layer-mountains" id="layer-mountains">
+            <img src="images/pexels-urtimud-89-76108288-32261668-Photoroom.png" alt="Snowy peaks midground">
+        </div>
+        <!-- Layer 3: Kedarnath Temple -->
+        <div class="parallax-layer layer-temple" id="layer-temple">
+            <img src="images/Kedarnath_Temple_standing_at_dusk_202608252013-Photoroom.png" alt="Kedarnath Temple standing at dusk">
+        </div>
+        <!-- Layer 4: Framing Pine Trees Foreground -->
+        <div class="parallax-layer layer-trees" id="layer-trees">
+            <img src="images/Pine_trees_framing_forest_center_202608252012-Photoroom.png" alt="Pine trees foreground">
+        </div>
 
-            <!-- 3D Door Container - positioned over the archway opening -->
-            <div id="door-container">
-                <div id="door-perspective">
-                    <!-- Left Door -->
-                    <div id="door-left" class="door-panel">
-                        <img src="images/Background copy.png" alt="Left Door" draggable="false">
-                    </div>
-                    <!-- Right Door -->
-                    <div id="door-right" class="door-panel">
-                        <img src="images/Background copy 2.png" alt="Right Door" draggable="false">
-                    </div>
-                </div>
-
-                <!-- Tap Hint Overlay -->
-                <div id="tap-hint">
-                    <img
-                        id="tap-hint-img"
-                        src="images/Group 106.png"
-                        alt="Tap to Open"
-                        draggable="false"
-                    >
-                </div>
-            </div>
+        <!-- Headline Overlay -->
+        <div class="parallax-overlay-text" id="overlay-text">
+            <p class="subtitle">The Divine Union of</p>
+            <h1>Somil &amp; Twinkle</h1>
+            <p class="scroll-prompt">Scroll to Begin</p>
         </div>
     </div>
 
-    <!-- ===== INVITATION SCENE: Scratch reveal after doors open ===== -->
-    <div id="invitation-scene">
-        <canvas id="confetti-canvas" aria-hidden="true"></canvas>
-
-        <div id="scratch-card" aria-live="polite">
-            <img
-                id="guess-title"
-                src="images/Guess the dates.png"
-                alt="Guess the dates"
-                draggable="false"
-            >
-
-            <div id="heart-stage">
-                <img
-                    id="white-heart"
-                    src="images/AdobeStock_2068356440 1.png"
-                    alt="12th December 2026"
-                    draggable="false"
-                >
-                <canvas
-                    id="scratch-canvas"
-                    aria-label="Scratch here to reveal the wedding date"
-                ></canvas>
+    <!-- Content Section -->
+    <div class="content-section">
+        <div class="invitation-card">
+            <div class="ornament">&#10022;</div>
+            <p class="invite-pre">With the blessings of Lord Shiva,</p>
+            <p class="invite-sub">We invite you to join us in celebrating the holy matrimony of</p>
+            <h2 class="couple-name">Somil &amp; Twinkle</h2>
+            
+            <div class="divider">
+                <span class="line"></span>
+                <span class="diamond">&#9670;</span>
+                <span class="line"></span>
             </div>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <h3>DATE</h3>
+                    <p>Saturday, December 12, 2026</p>
+                </div>
+                <div class="detail-item">
+                    <h3>VENUE</h3>
+                    <p>Pearl Blue Hotel &amp; Resort</p>
+                    <p class="sub">Raisen Road, Bhopal</p>
+                </div>
+                <div class="detail-item">
+                    <h3>TIME</h3>
+                    <p>7:00 PM Onwards</p>
+                </div>
+            </div>
+
+            <div class="divider">
+                <span class="line"></span>
+                <span class="diamond">&#9670;</span>
+                <span class="line"></span>
+            </div>
+            
+            <p class="footer-note">Your presence and blessings are highly requested on our special day.</p>
+            <div class="ornament">&#10022;</div>
         </div>
-
-        <section id="video-scene" aria-label="Wedding invitation video">
-            <video
-                id="wedding-video"
-                src="images/Foot_blessing_blue_hand_illustra…_202607131318.mp4"
-                playsinline
-                muted
-                preload="auto"
-            ></video>
-        </section>
-
-        <main id="website-content" aria-label="Wedding invitation details">
-            <div id="invitation-card">
-                <div class="ornament-top">&#10022;</div>
-                <p class="invitation-subtitle">You are cordially invited to</p>
-                <p class="invitation-label">THE WEDDING CELEBRATION OF</p>
-                <h1 class="couple-names">
-                    <span class="name">Somil</span>
-                    <span class="ampersand">&amp;</span>
-                    <span class="name">Twinkle</span>
-                </h1>
-                <div class="divider">
-                    <span class="divider-line"></span>
-                    <span class="divider-diamond">&#9670;</span>
-                    <span class="divider-line"></span>
-                </div>
-                <div class="event-details">
-                    <div class="detail-block">
-                        <span class="detail-label">Date</span>
-                        <span class="detail-value">Saturday, December 12, 2026</span>
-                    </div>
-                    <div class="detail-block">
-                        <span class="detail-label">Time</span>
-                        <span class="detail-value">7:00 PM Onwards</span>
-                    </div>
-                    <div class="detail-block">
-                        <span class="detail-label">Venue</span>
-                        <span class="detail-value">Pearl Blue Hotel &amp; Resort</span>
-                        <span class="detail-sub">Raisen Road, Bhopal</span>
-                    </div>
-                </div>
-                <div class="divider">
-                    <span class="divider-line"></span>
-                    <span class="divider-diamond">&#9670;</span>
-                    <span class="divider-line"></span>
-                </div>
-                <p class="rsvp-text">We request the honour of your presence</p>
-                <div class="ornament-bottom">&#10022;</div>
-            </div>
-        </main>
     </div>
 
     <script src="script.js"></script>
