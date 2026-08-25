@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const windowHeight = window.innerHeight;
 
         // --- Screen 1 Parallax Animations ---
-        // Background Deities (moves slowly downward to stay visible)
+        // Background Deities (remains static, does not go down)
         if (layerBg) {
-            layerBg.style.transform = `translateY(${scrollValue * 0.4}px)`;
+            layerBg.style.transform = `translateY(0px)`;
         }
 
         // Mountains: offset by baseline (15% height translation) + scrolls up relative to viewport
@@ -44,9 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- Screen 2 Hand Union Scrolling Animations ---
-        // Second Screen triggers between 400px and 900px scroll depth.
-        const startScroll = 400;
-        const endScroll = 850;
+        // Second Screen triggers between 50px and 450px scroll depth so hands meet on the second screen.
+        const startScroll = 50;
+        const endScroll = 450;
         const handUnionContainer = document.getElementById('hand-union-container');
         const lotusContainer = document.querySelector('.lotus-scroller-container');
 
