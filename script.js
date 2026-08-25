@@ -61,20 +61,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Shiva Hand (moves from left to center)
+            // Shiva Hand (moves from left to center first)
+            // It starts immediately at 0% scroll progress and reaches center by 60% progress
+            const shivaProgress = Math.min(1, progress / 0.6);
             if (shivaHand) {
-                shivaHand.style.opacity = progress;
-                // Meet in center
-                const currentLeft = -45 + (progress * 39); 
-                const currentY = 10 - (progress * 5);
+                shivaHand.style.opacity = shivaProgress;
+                const currentLeft = -45 + (shivaProgress * 39); 
+                const currentY = 10 - (shivaProgress * 5);
                 shivaHand.style.transform = `translate(${currentLeft}vw, ${currentY}vh)`;
             }
 
-            // Parvati Hand (moves from right to center)
+            // Parvati Hand (moves from right to center next)
+            // It starts coming in after Shiva's hand is halfway (starts at 40% progress, reaches center by 100% progress)
+            const parvatiProgress = progress < 0.4 ? 0 : Math.min(1, (progress - 0.4) / 0.6);
             if (parvatiHand) {
-                parvatiHand.style.opacity = progress;
-                const currentRight = -45 + (progress * 33);
-                const currentY = 10 - (progress * 5);
+                parvatiHand.style.opacity = parvatiProgress;
+                const currentRight = -45 + (parvatiProgress * 33);
+                const currentY = 10 - (parvatiProgress * 5);
                 parvatiHand.style.transform = `translate(${currentRight}vw, ${currentY}vh)`;
             }
 
