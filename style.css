@@ -10,6 +10,7 @@ body {
     color: #e5e9f0;
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
+    overflow-y: auto; /* Enable vertical scrolling */
     scroll-behavior: smooth;
 }
 
