@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startScroll = 400;
         const endScroll = 850;
         const handUnionContainer = document.getElementById('hand-union-container');
+        const lotusContainer = document.querySelector('.lotus-scroller-container');
 
         if (scrollValue > startScroll) {
             const progress = Math.min(1, (scrollValue - startScroll) / (endScroll - startScroll));
@@ -59,6 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     handUnionContainer.classList.remove('active-wiggle');
                 }
+            }
+
+            // Reveal the lotus scroller container on second screen
+            if (lotusContainer) {
+                lotusContainer.style.opacity = '1';
             }
 
             // Shiva Hand (moves from left to center)
@@ -104,9 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         } else {
-            // Under threshold: hide hands
+            // Under threshold: hide hands and lotus container
             if (handUnionContainer) {
                 handUnionContainer.classList.remove('active-wiggle');
+            }
+            if (lotusContainer) {
+                lotusContainer.style.opacity = '0';
             }
             if (shivaHand) {
                 shivaHand.style.opacity = 0;
