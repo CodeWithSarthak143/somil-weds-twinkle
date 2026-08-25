@@ -126,7 +126,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     z-index: 6; /* Sit in front of mountains/temple/trees */
     pointer-events: none;
     display: flex;
@@ -145,13 +145,34 @@ body {
 }
 
 .shiva-hand {
-    left: -40vw; /* Hidden left initially */
-    transform: translateY(15vh); /* Come in from slightly lower/upwards */
+    left: -45vw; /* Hidden left initially */
+    transform: translateY(10vh);
 }
 
 .parvati-hand {
-    right: -40vw; /* Hidden right initially */
-    transform: translateY(15vh);
+    right: -45vw; /* Hidden right initially */
+    transform: translateY(10vh);
+}
+
+/* Wiggle animations for hands as they meet */
+@keyframes shivaWiggle {
+    0%, 100% { transform: translateY(10vh) rotate(0deg); }
+    25% { transform: translateY(10vh) rotate(-2deg) translateX(5px); }
+    75% { transform: translateY(10vh) rotate(2deg) translateX(-5px); }
+}
+
+@keyframes parvatiWiggle {
+    0%, 100% { transform: translateY(10vh) scaleX(-1) rotate(0deg); }
+    25% { transform: translateY(10vh) scaleX(-1) rotate(-2deg) translateX(-5px); }
+    75% { transform: translateY(10vh) scaleX(-1) rotate(2deg) translateX(5px); }
+}
+
+.hand-union-container.active-wiggle .shiva-hand {
+    animation: shivaWiggle 1.5s ease-in-out infinite alternate;
+}
+
+.hand-union-container.active-wiggle .parvati-hand {
+    animation: parvatiWiggle 1.5s ease-in-out infinite alternate;
 }
 
 /* Shine Flash Effect */
@@ -246,14 +267,14 @@ body {
 }
 
 .lotus-item {
-    width: 60px;
-    height: 60px;
-    margin: 0 30px;
-    background-image: url('images/Arm_holding_blooming_lotus_flower_202608252038-Photoroom.png');
+    width: 50px;
+    height: 50px;
+    margin: 0 25px;
+    background-image: url('images/Lotus_Flower_PNG_Clipart-168.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    filter: drop-shadow(0 2px 5px rgba(255, 105, 180, 0.4));
+    filter: drop-shadow(0 2px 4px rgba(255, 105, 180, 0.5));
 }
 
 @keyframes scrollLotus {
@@ -265,12 +286,12 @@ body {
     }
 }
 
-/* Details Section Styling */
+/* Details Section Styling (Moved to a full third screen) */
 .content-section {
     position: relative;
     z-index: 10;
     background: linear-gradient(to bottom, #0d0f12, #181c24);
-    padding: 80px 20px;
+    padding: 150px 20px 100px 20px; /* Add top padding to create physical separation (Third Screen) */
     display: flex;
     justify-content: center;
 }

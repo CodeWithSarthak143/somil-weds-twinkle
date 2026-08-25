@@ -44,31 +44,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- Screen 2 Hand Union Scrolling Animations ---
-        // Trigger hand movements when user starts scrolling down towards second screen
-        // Threshold: Hands start coming in after scrolling 150px, and meet around 500px scroll
-        const startScroll = 150;
-        const endScroll = 550;
+        // Second Screen triggers between 400px and 900px scroll depth.
+        const startScroll = 400;
+        const endScroll = 850;
+        const handUnionContainer = document.getElementById('hand-union-container');
 
         if (scrollValue > startScroll) {
             const progress = Math.min(1, (scrollValue - startScroll) / (endScroll - startScroll));
 
+            if (handUnionContainer) {
+                // Add wiggle class when hands are active and moving, remove it when fully joined
+                if (progress > 0 && progress < 1) {
+                    handUnionContainer.classList.add('active-wiggle');
+                } else {
+                    handUnionContainer.classList.remove('active-wiggle');
+                }
+            }
+
             // Shiva Hand (moves from left to center)
             if (shivaHand) {
                 shivaHand.style.opacity = progress;
-                // Translate left coordinate from -40vw to meeting point near center (-6vw to offset wrist overlap)
-                const currentLeft = -40 + (progress * 34); 
-                // Moves slightly upwards as they join
-                const currentY = 15 - (progress * 10);
+                // Meet in center
+                const currentLeft = -45 + (progress * 39); 
+                const currentY = 10 - (progress * 5);
                 shivaHand.style.transform = `translate(${currentLeft}vw, ${currentY}vh)`;
             }
 
             // Parvati Hand (moves from right to center)
             if (parvatiHand) {
                 parvatiHand.style.opacity = progress;
-                // Translate right coordinate from -40vw to meeting point near center (-12vw offset)
-                const currentRight = -40 + (progress * 28);
-                const currentY = 15 - (progress * 10);
-                parvatiHand.style.transform = `translate(${currentRight}vw, ${currentY}vh) scaleX(-1)`; // Flip image horizontally
+                const currentRight = -45 + (progress * 33);
+                const currentY = 10 - (progress * 5);
+                parvatiHand.style.transform = `translate(${currentRight}vw, ${currentY}vh) scaleX(-1)`;
             }
 
             // If progress hits 100%, hands are joined. Trigger flash and display card.
@@ -98,13 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             // Under threshold: hide hands
+            if (handUnionContainer) {
+                handUnionContainer.classList.remove('active-wiggle');
+            }
             if (shivaHand) {
                 shivaHand.style.opacity = 0;
-                shivaHand.style.transform = 'translate(-40vw, 15vh)';
+                shivaHand.style.transform = 'translate(-45vw, 10vh)';
             }
             if (parvatiHand) {
                 parvatiHand.style.opacity = 0;
-                parvatiHand.style.transform = 'translate(40vw, 15vh)';
+                parvatiHand.style.transform = 'translate(45vw, 10vh)';
             }
             if (flashTriggered) {
                 flashTriggered = false;
