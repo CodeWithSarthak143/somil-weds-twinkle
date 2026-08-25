@@ -144,22 +144,26 @@ body {
 }
 
 .hand {
-    position: absolute;
+    position: fixed; /* Fixed position so they lock to the screen and remain visible */
     width: clamp(250px, 35vw, 550px);
     height: auto;
     will-change: transform;
     opacity: 0;
     transition: opacity 0.5s ease;
+    z-index: 10; /* Bring hands fully to the foreground (above trees/mountains/temple) */
+    pointer-events: none;
 }
 
 .shiva-hand {
-    left: -45vw; /* Hidden left initially */
-    transform: translateY(10vh);
+    left: 0;
+    top: 30%;
+    transform: translate(-45vw, 10vh);
 }
 
 .parvati-hand {
-    right: -45vw; /* Hidden right initially */
-    transform: translateY(10vh);
+    right: 0;
+    top: 30%;
+    transform: translate(45vw, 10vh);
 }
 
 /* Wiggle animations for hands as they meet */
@@ -185,14 +189,16 @@ body {
 
 /* Shine Flash Effect */
 .shine-flash {
-    position: absolute;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
     width: 250px;
     height: 250px;
     background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,215,0,0.8) 25%, rgba(255,215,0,0) 70%);
     border-radius: 50%;
     opacity: 0;
-    transform: scale(0);
-    z-index: 7;
+    z-index: 11;
     pointer-events: none;
 }
 
@@ -203,39 +209,41 @@ body {
 @keyframes flashShineAnim {
     0% {
         opacity: 0;
-        transform: scale(0);
+        transform: translate(-50%, -50%) scale(0);
     }
     30% {
         opacity: 1;
-        transform: scale(1.8);
+        transform: translate(-50%, -50%) scale(1.8);
     }
     100% {
         opacity: 0;
-        transform: scale(2.5);
+        transform: translate(-50%, -50%) scale(2.5);
     }
 }
 
 /* Save the Dates Reveal Card */
 .save-dates-card {
-    position: absolute;
-    z-index: 8;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% + 50px));
+    z-index: 12;
     text-align: center;
     color: #ffffff;
     opacity: 0;
-    transform: translateY(50px);
     transition: opacity 0.8s ease, transform 0.8s ease;
     width: 90%;
     max-width: 500px;
     padding: 30px;
     border-radius: 12px;
-    background: rgba(13, 15, 18, 0.5);
+    background: rgba(13, 15, 18, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
 }
 
 .save-dates-card.reveal {
     opacity: 1;
-    transform: translateY(-20px); /* Center upwards area */
+    transform: translate(-50%, -50%); /* Centered on screen */
 }
 
 .save-dates-card h2 {
