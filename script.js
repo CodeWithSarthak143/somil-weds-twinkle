@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const layerTrees = document.getElementById('layer-trees');
     const overlayText = document.getElementById('overlay-text');
 
-    const shivaHand = document.getElementById('shiva-hand');
-    const parvatiHand = document.getElementById('parvati-hand');
     const shineFlash = document.getElementById('shine-flash');
     const saveDatesCard = document.getElementById('save-dates-card');
 
@@ -44,37 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
             overlayText.style.opacity = Math.max(0, 1 - parallaxScroll / 300);
         }
 
-        // --- Screen 2 Hand Union Animation ---
-        // Keep the first viewport exclusively for the parallax. The hands begin only
-        // after that sequence has completed, then have most of the second viewport to meet.
+        // --- Screen 2 Save the Dates Reveal ---
+        // Second Screen triggers Save the Dates content between 100vh and 185vh scroll depth.
         const startScroll = windowHeight;
         const endScroll = windowHeight * 1.85;
 
         if (scrollValue >= startScroll) {
             const progress = Math.min(1, (scrollValue - startScroll) / (endScroll - startScroll));
 
-            // Shiva Hand (moves from left to center first)
-            // It starts immediately at 0% scroll progress and reaches center by 60% progress
-            const shivaProgress = Math.min(1, progress / 0.6);
-            if (shivaHand) {
-                shivaHand.style.opacity = shivaProgress;
-                const currentLeft = -45 + (shivaProgress * 39); 
-                const currentY = 10 - (shivaProgress * 5);
-                shivaHand.style.transform = `translate(${currentLeft}vw, ${currentY}vh)`;
-            }
-
-            // Parvati Hand (moves from right to center next)
-            // It starts coming in after Shiva's hand is halfway (starts at 40% progress, reaches center by 100% progress)
-            const parvatiProgress = progress < 0.4 ? 0 : Math.min(1, (progress - 0.4) / 0.6);
-            if (parvatiHand) {
-                parvatiHand.style.opacity = parvatiProgress;
-                const currentRight = -45 + (parvatiProgress * 33);
-                const currentY = 10 - (parvatiProgress * 5);
-                parvatiHand.style.transform = `translate(${currentRight}vw, ${currentY}vh)`;
-            }
-
-            // If progress hits 100%, hands are joined. Trigger flash and display card.
-            if (progress >= 1) {
+            // If progress hits 100%, trigger flash and display card.
+            if (progress >= 0.7) {
                 if (!flashTriggered) {
                     flashTriggered = true;
                     if (shineFlash) {
@@ -99,15 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         } else {
-            // During the parallax screen: keep both hands completely off-screen.
-            if (shivaHand) {
-                shivaHand.style.opacity = 0;
-                shivaHand.style.transform = 'translate(-45vw, 10vh)';
-            }
-            if (parvatiHand) {
-                parvatiHand.style.opacity = 0;
-                parvatiHand.style.transform = 'translate(45vw, 10vh)';
-            }
+            // Under threshold: reset animation triggers
             if (flashTriggered) {
                 flashTriggered = false;
                 if (shineFlash) {

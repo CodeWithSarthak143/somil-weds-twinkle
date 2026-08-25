@@ -128,7 +128,7 @@ body {
     }
 }
 
-/* Hand Union Animations & Second Screen Layout */
+/* Hand Union Container & Second Screen Layout */
 .hand-union-container {
     position: absolute;
     top: 0;
@@ -141,29 +141,6 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-}
-
-.hand {
-    position: fixed; /* Fixed position so they lock to the screen and remain visible */
-    width: clamp(250px, 35vw, 550px);
-    height: auto;
-    will-change: transform;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 10; /* Bring hands fully to the foreground (above trees/mountains/temple) */
-    pointer-events: none;
-}
-
-.shiva-hand {
-    left: 0;
-    top: 30%;
-    transform: translate(-45vw, 10vh);
-}
-
-.parvati-hand {
-    right: 0;
-    top: 30%;
-    transform: translate(45vw, 10vh);
 }
 
 /* Shine Flash Effect */
