@@ -7,8 +7,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const shineFlash = document.getElementById('shine-flash');
     const saveDatesCard = document.getElementById('save-dates-card');
+    const bgMusic = document.getElementById('bg-music');
 
     let flashTriggered = false;
+
+    // Browser autoplay policy requires user interaction before audio plays.
+    // Trigger audio play on first touch, click, or scroll anywhere.
+    function playAudioOnInteraction() {
+        if (bgMusic && bgMusic.paused) {
+            bgMusic.play().then(() => {
+                // Remove listeners once playback starts successfully
+                window.removeEventListener('click', playAudioOnInteraction);
+                window.removeEventListener('touchstart', playAudioOnInteraction);
+                window.removeEventListener('scroll', playAudioOnInteraction);
+            }).catch(e => {
+                console.log('Audio autoplay blocked, waiting for interaction:', e);
+            });
+        }
+    }
+
+    window.addEventListener('click', playAudioOnInteraction);
+    window.addEventListener('touchstart', playAudioOnInteraction);
+    window.addEventListener('scroll', playAudioOnInteraction);
 
     function updateScene() {
         const scrollValue = window.scrollY;
