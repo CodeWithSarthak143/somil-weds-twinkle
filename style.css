@@ -14,9 +14,16 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Parallax Wrapper */
-.parallax-container {
+/* Scroll wrapper to create scrollable space */
+.scroll-wrapper {
     position: relative;
+    height: 220vh; /* Set taller height to provide scroll track space for sticky panel */
+}
+
+/* Parallax Wrapper (Sticky to hold view during transitions) */
+.parallax-container {
+    position: sticky;
+    top: 0;
     width: 100%;
     height: 100vh;
     overflow: hidden;
