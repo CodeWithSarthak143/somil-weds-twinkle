@@ -139,4 +139,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
         videoObserver.observe(weddingVideo);
     }
+
+    // --- Butterfly Spawner & Flight Animator ---
+    const butterflyContainer = document.getElementById('butterfly-container');
+    const butterflyColors = ['#ff758f', '#ffd700', '#4cc9f0', '#ff9f1c', '#b5179e', '#72efdd'];
+
+    function createButterfly() {
+        if (!butterflyContainer) return;
+
+        const butterfly = document.createElement('div');
+        butterfly.className = 'butterfly';
+
+        // Select a random color for the butterfly wings
+        const randomColor = butterflyColors[Math.floor(Math.random() * butterflyColors.length)];
+        butterfly.style.color = randomColor;
+
+        // Build wing structure
+        const wings = document.createElement('div');
+        wings.className = 'wings';
+        const leftWing = document.createElement('div');
+        leftWing.className = 'wing-left';
+        const rightWing = document.createElement('div');
+        rightWing.className = 'wing-right';
+
+        wings.appendChild(leftWing);
+        wings.appendChild(rightWing);
+        butterfly.appendChild(wings);
+
+        // Set initial random position
+        const startX = Math.random() * window.innerWidth;
+        const startY = Math.random() * window.innerHeight;
+        butterfly.style.left = `${startX}px`;
+        butterfly.style.top = `${startY}px`;
+
+        butterflyContainer.appendChild(butterfly);
+
+        // Start animating flight
+        animateFlight(butterfly);
+    }
+
+    function animateFlight(butterfly) {
+        if (!butterfly.parentNode) return;
+
+        // Pick a random target coordinate
+        const targetX = Math.random() * (window.innerWidth - 40);
+        const targetY = Math.random() * (window.innerHeight - 40);
+
+        // Calculate rotation angle to align with travel vector
+        const currentX = parseFloat(butterfly.style.left) || 0;
+        const currentY = parseFloat(butterfly.style.top) || 0;
+        const dx = targetX - currentX;
+        const dy = targetY - currentY;
+        const angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+
+        // Random duration between 5s and 10s
+        const duration = 5000 + Math.random() * 5000;
+
+        butterfly.style.transition = `left ${duration}ms ease-in-out, top ${duration}ms ease-in-out, transform 1000ms ease-in-out`;
+        
+        // Trigger position update
+        butterfly.style.left = `${targetX}px`;
+        butterfly.style.top = `${targetY}px`;
+        butterfly.style.transform = `rotate(${angle}deg)`;
+
+        // Schedule next segment of flight
+        setTimeout(() => {
+            animateFlight(butterfly);
+        }, duration);
+    }
+
+    // Spawn 3 butterflies initially
+    for (let i = 0; i < 3; i++) {
+        setTimeout(createButterfly, i * 1500); // Stagger spawning slightly
+    }
 });
