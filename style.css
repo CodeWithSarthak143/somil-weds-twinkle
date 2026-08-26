@@ -661,3 +661,34 @@ body.no-scroll {
         transform: rotateY(-70deg);
     }
 }
+
+/* Petal Rain Container */
+#petal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9998;
+    overflow: hidden;
+}
+
+.petal {
+    position: absolute;
+    top: -50px;
+    pointer-events: none;
+    will-change: transform, top;
+    animation: fall-petal linear forwards;
+}
+
+@keyframes fall-petal {
+    0% {
+        top: -50px;
+        transform: translateX(0) rotate(0deg) rotateY(0deg);
+    }
+    100% {
+        top: 105vh;
+        transform: translateX(var(--drift, 100px)) rotate(var(--rotation, 360deg)) rotateY(var(--flip, 180deg));
+    }
+}

@@ -253,12 +253,12 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(fly, 50);
     }
 
-    // Spawn manager to dynamically control population (keeps 3 to 5 butterflies)
+    // Spawn manager to dynamically control population (keeps 1 to 2 butterflies)
     function spawnManager() {
         const activeCount = butterflyContainer ? butterflyContainer.children.length : 0;
         
-        // Pick a random target between 3 and 5
-        const targetCount = 3 + Math.floor(Math.random() * 3); // 3, 4, or 5
+        // Pick a random target between 1 and 2
+        const targetCount = 1 + Math.floor(Math.random() * 2); // 1 or 2
         
         if (activeCount < targetCount) {
             createButterfly();
@@ -270,4 +270,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start spawn manager
     spawnManager();
+
+    // --- Petal Rain Spawner ---
+    const petalContainer = document.getElementById('petal-container');
+    const petalImages = [
+        'images/delicate-pink-flower-petal-with-yellow-base_53876-1375095-Photoroom.png',
+        'images/delicate-pink-rose-petal-isolated-on-transparent-background-free-png.png',
+        'images/df0f9a13eb63265708631abee52245c7-Photoroom.png',
+        'images/images-Photoroom.png'
+    ];
+
+    function createPetal() {
+        if (!petalContainer) return;
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        
+        const randomImg = petalImages[Math.floor(Math.random() * petalImages.length)];
+        petal.style.backgroundImage = `url('${randomImg}')`;
+        petal.style.backgroundSize = 'contain';
+        petal.style.backgroundRepeat = 'no-repeat';
+        
+        // Random size between 12px and 26px
+        const size = 12 + Math.random() * 14;
+        petal.style.width = `${size}px`;
+        petal.style.height = `${size}px`;
+        
+        // Random starting horizontal position
+        petal.style.left = `${Math.random() * window.innerWidth}px`;
+        
+        // Randomize fall properties
+        const duration = 6000 + Math.random() * 6000; // 6s to 12s
+        const delay = Math.random() * 1000; // 0s to 1s delay
+        const drift = -80 + Math.random() * 160; // drift left or right up to 80px
+        const rotation = 360 + Math.random() * 720; // spin degrees
+        const flip = Math.random() > 0.5 ? 360 : -360; // 3D flip direction
+
+        petal.style.animationDuration = `${duration}ms`;
+        petal.style.animationDelay = `${delay}ms`;
+        
+        // Inject properties into CSS using CSS variables
+        petal.style.setProperty('--drift', `${drift}px`);
+        petal.style.setProperty('--rotation', `${rotation}deg`);
+        petal.style.setProperty('--flip', `${flip}deg`);
+        
+        petalContainer.appendChild(petal);
+        
+        // Clean up from DOM once animation is complete
+        setTimeout(() => {
+            petal.remove();
+        }, duration + delay);
+    }
+
+    // Spawn a petal periodically (every 450ms to keep a steady, elegant rain)
+    setInterval(createPetal, 450);
 });
