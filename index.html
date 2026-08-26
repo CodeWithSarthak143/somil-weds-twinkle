@@ -72,7 +72,24 @@
 
     <!-- Video Section (Screen 2) -->
     <div class="video-section">
-        <video id="wedding-video" src="images/Two_arms_reaching_for_lotus_202608261844.mp4" loop muted playsinline></video>
+        <video id="wedding-video" src="images/Two_arms_reaching_for_lotus_202608261844.mp4" muted playsinline></video>
+        
+        <!-- SVG overlay for text clip mask effect -->
+        <div class="video-text-mask-overlay">
+            <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+                <defs>
+                    <mask id="text-mask">
+                        <!-- Make everything white (opaque background) -->
+                        <rect width="100%" height="100%" fill="white" />
+                        <!-- Black text cuts holes in the mask to show the video behind it -->
+                        <text x="50%" y="42%" class="mask-line-1" text-anchor="middle">Written by destiny,</text>
+                        <text x="50%" y="60%" class="mask-line-2" text-anchor="middle">Blessed by Mahadev</text>
+                    </mask>
+                </defs>
+                <!-- This rect is filled with the site background color and masked -->
+                <rect width="100%" height="100%" fill="#0d0f12" mask="url(#text-mask)" />
+            </svg>
+        </div>
     </div>
 
     <!-- Content Section -->

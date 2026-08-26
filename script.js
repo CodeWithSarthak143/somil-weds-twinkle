@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // IntersectionObserver to autoplay wedding video when scrolled into view
     const weddingVideo = document.getElementById('wedding-video');
+    const videoSection = document.querySelector('.video-section');
     if (weddingVideo) {
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -138,6 +139,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.15 });
 
         videoObserver.observe(weddingVideo);
+
+        // Trigger loop and overlay when first playback finishes
+        weddingVideo.addEventListener('ended', () => {
+            if (videoSection) {
+                videoSection.classList.add('masked');
+            }
+            weddingVideo.loop = true;
+            weddingVideo.play().catch(err => {
+                console.log("Video looping failed:", err);
+            });
+        });
     }
 
     // --- Butterfly Spawner & Flight Animator ---

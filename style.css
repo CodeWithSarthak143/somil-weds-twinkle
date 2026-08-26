@@ -535,6 +535,59 @@ body.no-scroll {
     }
 }
 
+/* Video Text Mask Overlay */
+.video-text-mask-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 12;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s ease, visibility 1.5s ease;
+}
+
+.video-section.masked .video-text-mask-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Masked Text Typographical Settings */
+.mask-line-1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: bold;
+    fill: black;
+    letter-spacing: 2px;
+}
+
+.mask-line-2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 80px;
+    fill: black;
+}
+
+/* Adjust text sizes on smaller screens */
+@media (max-width: 768px) {
+    .mask-line-1 {
+        font-size: 45px;
+    }
+    .mask-line-2 {
+        font-size: 65px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mask-line-1 {
+        font-size: 36px;
+    }
+    .mask-line-2 {
+        font-size: 50px;
+    }
+}
+
 /* Butterfly Animation Container */
 #butterfly-container {
     position: fixed;
