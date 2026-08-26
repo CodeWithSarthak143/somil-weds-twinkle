@@ -47,37 +47,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Browser autoplay policy requires user interaction before audio plays.
-    // Trigger audio play on first click or touch anywhere on the page.
-    function playAudioOnInteraction() {
-        if (bgMusic && bgMusic.paused) {
-            bgMusic.play().then(() => {
-                console.log('Music started successfully via user interaction.');
-                updateMusicButtonState();
-                removeInteractionListeners();
-            }).catch(e => {
-                console.log('Audio autoplay blocked, waiting for interaction:', e);
-            });
-        }
-    }
+    const welcomeOverlay = document.getElementById('welcome-overlay');
+    const enterBtn = document.getElementById('enter-btn');
 
-    function removeInteractionListeners() {
-        window.removeEventListener('click', playAudioOnInteraction);
-        window.removeEventListener('touchstart', playAudioOnInteraction);
-    }
+    // Prevent scroll until overlay is dismissed
+    document.body.classList.add('no-scroll');
 
-    // Try playing immediately
-    if (bgMusic) {
-        bgMusic.play().then(() => {
-            console.log('Music autoplayed on load.');
-            updateMusicButtonState();
-        }).catch(() => {
-            console.log('Autoplay blocked. Registering interaction listeners.');
-            updateMusicButtonState();
-            window.addEventListener('click', playAudioOnInteraction);
-            window.addEventListener('touchstart', playAudioOnInteraction);
+    if (enterBtn && welcomeOverlay) {
+        enterBtn.addEventListener('click', () => {
+            // Dismiss welcome screen
+            welcomeOverlay.classList.add('fade-out');
+            document.body.classList.remove('no-scroll');
+
+            // Play background music (unlocked by this click)
+            if (bgMusic && bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    console.log('Music started successfully via Open Invitation button.');
+                    updateMusicButtonState();
+                }).catch(e => {
+                    console.log('Audio playback failed:', e);
+                });
+            }
+
+            // Remove welcome screen from DOM after transition finishes
+            setTimeout(() => {
+                welcomeOverlay.remove();
+            }, 800);
         });
     }
+
+    // Set initial button state (mute icon displayed initially since it hasn't played yet)
+    updateMusicButtonState();
 
     function updateScene() {
         const scrollValue = window.scrollY;
