@@ -339,4 +339,162 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Spawn a petal periodically (every 450ms to keep a steady, elegant rain)
     setInterval(createPetal, 450);
+
+    // --- Golden Scratch Card Logic ---
+    const canvas = document.getElementById('scratch-canvas');
+    const wrapper = document.querySelector('.dates-reveal-wrapper');
+    
+    if (canvas && wrapper) {
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let scratched = false;
+
+        // Resize canvas to match its visible wrapper bounding box
+        function resizeCanvas() {
+            if (scratched) return;
+            const rect = wrapper.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            drawGoldLayer();
+        }
+
+        function drawGoldLayer() {
+            if (!ctx) return;
+            
+            // Clear
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw metallic gold gradient
+            const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            grad.addColorStop(0, '#d4af37');   // Metallic Gold
+            grad.addColorStop(0.3, '#fff3a8');  // Bright Gold Highlight
+            grad.addColorStop(0.7, '#aa771c');  // Deep Golden Bronze
+            grad.addColorStop(1, '#f3e5ab');    // Brass/Soft Gold
+            
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Add fine gold texture lines
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 8) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i + 20, canvas.height);
+                ctx.stroke();
+            }
+
+            // Draw text prompt
+            ctx.fillStyle = '#4a3300';
+            ctx.font = "bold 16px 'Playfair Display', serif";
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // Add slight shadow to scratch text
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.35)';
+            ctx.shadowBlur = 2;
+            ctx.shadowOffsetX = 1;
+            ctx.shadowOffsetY = 1;
+            
+            ctx.fillText('SCRATCH HERE', canvas.width / 2, canvas.height / 2);
+            
+            // Reset shadows
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+        }
+
+        // Initialize canvas sizing (staggered to ensure DOM layout is calculated)
+        setTimeout(resizeCanvas, 500);
+        window.addEventListener('resize', resizeCanvas);
+
+        // Drawing actions
+        function getPointerPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function scratch(e) {
+            if (!isDrawing || scratched) return;
+            e.preventDefault();
+            const pos = getPointerPos(e);
+            
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, 22, 0, Math.PI * 2); // 22px scratch brush radius
+            ctx.fill();
+        }
+
+        function checkScratchPercentage() {
+            if (scratched) return;
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let cleared = 0;
+            const totalPixels = imgData.data.length / 4;
+            
+            for (let i = 3; i < imgData.data.length; i += 4) {
+                if (imgData.data[i] === 0) {
+                    cleared++;
+                }
+            }
+
+            const percent = cleared / totalPixels;
+            if (percent > 0.40) { // 40% cleared triggers reveal
+                scratched = true;
+                canvas.style.opacity = '0';
+                canvas.style.pointerEvents = 'none';
+
+                // Confetti blast! (Party popper)
+                triggerConfettiPopper();
+
+                setTimeout(() => {
+                    canvas.remove();
+                }, 600);
+            }
+        }
+
+        function triggerConfettiPopper() {
+            if (typeof confetti === 'function') {
+                // Left popper blast
+                confetti({
+                    particleCount: 80,
+                    spread: 60,
+                    origin: { x: 0.2, y: 0.6 },
+                    colors: ['#ffd700', '#ff69b4', '#ff758f', '#ffffff']
+                });
+                
+                // Right popper blast
+                confetti({
+                    particleCount: 80,
+                    spread: 60,
+                    origin: { x: 0.8, y: 0.6 },
+                    colors: ['#ffd700', '#ff69b4', '#ff758f', '#ffffff']
+                });
+
+                // Center burst after short delay
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 100,
+                        spread: 80,
+                        origin: { x: 0.5, y: 0.5 },
+                        colors: ['#ffd700', '#ff9f1c', '#ffffff']
+                    });
+                }, 200);
+            }
+        }
+
+        // Event listeners
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
+        canvas.addEventListener('mousemove', scratch);
+        window.addEventListener('mouseup', () => { if (isDrawing) { isDrawing = false; checkScratchPercentage(); } });
+
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+        canvas.addEventListener('touchmove', scratch);
+        window.addEventListener('touchend', () => { if (isDrawing) { isDrawing = false; checkScratchPercentage(); } });
+    }
 });

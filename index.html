@@ -62,8 +62,11 @@
                 <!-- Save the Dates Card -->
                 <div class="save-dates-card" id="save-dates-card">
                     <h2>Save the Dates</h2>
-                    <div class="date-highlight">10th, 11th &amp; 12th</div>
-                    <div class="month-highlight">December 2026</div>
+                    <div class="dates-reveal-wrapper">
+                        <div class="date-highlight">10th, 11th &amp; 12th</div>
+                        <div class="month-highlight">December 2026</div>
+                        <canvas id="scratch-canvas"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -138,6 +141,8 @@
     <!-- Petal Container -->
     <div id="petal-container"></div>
 
+    <!-- Canvas Confetti Library for reveal effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
