@@ -8,44 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const shineFlash = document.getElementById('shine-flash');
     const saveDatesCard = document.getElementById('save-dates-card');
     const bgMusic = document.getElementById('bg-music');
-    const musicToggle = document.getElementById('music-toggle');
 
     let flashTriggered = false;
-
-    // Sync button state (icon & rotation) with actual audio playback status
-    function updateMusicButtonState() {
-        if (!bgMusic || !musicToggle) return;
-        const iconSpan = musicToggle.querySelector('.music-icon');
-        if (bgMusic.paused) {
-            musicToggle.classList.remove('playing');
-            if (iconSpan) iconSpan.textContent = '🔇';
-        } else {
-            musicToggle.classList.add('playing');
-            if (iconSpan) iconSpan.textContent = '🎵';
-        }
-    }
-
-    // Toggle play/pause
-    function toggleMusic() {
-        if (!bgMusic) return;
-        if (bgMusic.paused) {
-            bgMusic.play().then(() => {
-                updateMusicButtonState();
-            }).catch(e => {
-                console.log('Playback failed on toggle:', e);
-            });
-        } else {
-            bgMusic.pause();
-            updateMusicButtonState();
-        }
-    }
-
-    if (musicToggle) {
-        musicToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent triggering document-wide listeners
-            toggleMusic();
-        });
-    }
 
     const welcomeOverlay = document.getElementById('welcome-overlay');
     const enterBtn = document.getElementById('enter-btn');
@@ -63,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (bgMusic && bgMusic.paused) {
                 bgMusic.play().then(() => {
                     console.log('Music started successfully via Open Invitation button.');
-                    updateMusicButtonState();
                 }).catch(e => {
                     console.log('Audio playback failed:', e);
                 });
@@ -75,9 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 800);
         });
     }
-
-    // Set initial button state (mute icon displayed initially since it hasn't played yet)
-    updateMusicButtonState();
 
     function updateScene() {
         const scrollValue = window.scrollY;

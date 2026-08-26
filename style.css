@@ -382,55 +382,6 @@ body {
     }
     .invitation-card {
         padding: 40px 20px;
-    }
-}
-
-/* Floating Music Toggle Button */
-.music-toggle {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(18, 18, 24, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 2px solid #ffd700;
-    color: #ffd700;
-    font-size: 1.3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
-    transition: all 0.3s ease;
-    outline: none;
-    padding: 0;
-}
-
-.music-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
-}
-
-.music-toggle:active {
-    transform: scale(0.95);
-}
-
-.music-toggle.playing .music-icon {
-    animation: rotateMusic 4s linear infinite;
-    display: inline-block;
-}
-
-@keyframes rotateMusic {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
 }
 
 /* Welcome Overlay */
