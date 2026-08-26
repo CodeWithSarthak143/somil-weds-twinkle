@@ -169,50 +169,105 @@ document.addEventListener('DOMContentLoaded', () => {
         wings.appendChild(bodyLine);
         butterfly.appendChild(wings);
 
-        // Set initial random position
-        const startX = Math.random() * window.innerWidth;
-        const startY = Math.random() * window.innerHeight;
+        // Determine starting edge (outside viewport)
+        const edge = Math.floor(Math.random() * 4);
+        let startX, startY;
+        const offset = 60; // offset outside screen bounds
+
+        if (edge === 0) { // Left
+            startX = -offset;
+            startY = Math.random() * window.innerHeight;
+        } else if (edge === 1) { // Right
+            startX = window.innerWidth + offset;
+            startY = Math.random() * window.innerHeight;
+        } else if (edge === 2) { // Top
+            startX = Math.random() * window.innerWidth;
+            startY = -offset;
+        } else { // Bottom
+            startX = Math.random() * window.innerWidth;
+            startY = window.innerHeight + offset;
+        }
+
         butterfly.style.left = `${startX}px`;
         butterfly.style.top = `${startY}px`;
-
         butterflyContainer.appendChild(butterfly);
 
-        // Start animating flight
-        animateFlight(butterfly);
+        // Flight stages:
+        // 0 & 1: Flutter to random points inside screen
+        // 2: Fly outside screen (exit stage) and self-destruct
+        let flightStage = 0;
+
+        function fly() {
+            if (!butterfly.parentNode) return;
+
+            let targetX, targetY;
+            let duration = 4000 + Math.random() * 4000; // 4s to 8s per segment
+
+            if (flightStage < 2) {
+                // Fly to random points inside the viewport
+                targetX = 100 + Math.random() * (window.innerWidth - 200);
+                targetY = 100 + Math.random() * (window.innerHeight - 200);
+                flightStage++;
+            } else {
+                // Exit screen
+                const exitEdge = Math.floor(Math.random() * 4);
+                if (exitEdge === 0) { // Left
+                    targetX = -offset;
+                    targetY = Math.random() * window.innerHeight;
+                } else if (exitEdge === 1) { // Right
+                    targetX = window.innerWidth + offset;
+                    targetY = Math.random() * window.innerHeight;
+                } else if (exitEdge === 2) { // Top
+                    targetX = Math.random() * window.innerWidth;
+                    targetY = -offset;
+                } else { // Bottom
+                    targetX = Math.random() * window.innerWidth;
+                    targetY = window.innerHeight + offset;
+                }
+                flightStage++;
+            }
+
+            // Calculate angle to rotate butterfly in the direction of flight
+            const currentX = parseFloat(butterfly.style.left) || 0;
+            const currentY = parseFloat(butterfly.style.top) || 0;
+            const dx = targetX - currentX;
+            const dy = targetY - currentY;
+            const angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+
+            butterfly.style.transition = `left ${duration}ms ease-in-out, top ${duration}ms ease-in-out, transform 1200ms ease-in-out`;
+            butterfly.style.left = `${targetX}px`;
+            butterfly.style.top = `${targetY}px`;
+            butterfly.style.transform = `rotate(${angle}deg)`;
+
+            if (flightStage <= 2) {
+                setTimeout(fly, duration);
+            } else {
+                // Once it exits the screen, remove from DOM
+                setTimeout(() => {
+                    butterfly.remove();
+                }, duration);
+            }
+        }
+
+        // Start flight after a tiny delay
+        setTimeout(fly, 50);
     }
 
-    function animateFlight(butterfly) {
-        if (!butterfly.parentNode) return;
-
-        // Pick a random target coordinate
-        const targetX = Math.random() * (window.innerWidth - 40);
-        const targetY = Math.random() * (window.innerHeight - 40);
-
-        // Calculate rotation angle to align with travel vector
-        const currentX = parseFloat(butterfly.style.left) || 0;
-        const currentY = parseFloat(butterfly.style.top) || 0;
-        const dx = targetX - currentX;
-        const dy = targetY - currentY;
-        const angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
-
-        // Random duration between 5s and 10s
-        const duration = 5000 + Math.random() * 5000;
-
-        butterfly.style.transition = `left ${duration}ms ease-in-out, top ${duration}ms ease-in-out, transform 1000ms ease-in-out`;
+    // Spawn manager to dynamically control population (keeps 3 to 5 butterflies)
+    function spawnManager() {
+        const activeCount = butterflyContainer ? butterflyContainer.children.length : 0;
         
-        // Trigger position update
-        butterfly.style.left = `${targetX}px`;
-        butterfly.style.top = `${targetY}px`;
-        butterfly.style.transform = `rotate(${angle}deg)`;
-
-        // Schedule next segment of flight
-        setTimeout(() => {
-            animateFlight(butterfly);
-        }, duration);
+        // Pick a random target between 3 and 5
+        const targetCount = 3 + Math.floor(Math.random() * 3); // 3, 4, or 5
+        
+        if (activeCount < targetCount) {
+            createButterfly();
+        }
+        
+        // Schedule next check
+        setTimeout(spawnManager, 2000 + Math.random() * 2000);
     }
 
-    // Spawn 3 butterflies initially
-    for (let i = 0; i < 3; i++) {
-        setTimeout(createButterfly, i * 1500); // Stagger spawning slightly
-    }
+    // Start spawn manager
+    spawnManager();
 });
