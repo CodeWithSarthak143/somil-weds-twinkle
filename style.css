@@ -525,6 +525,16 @@ body.no-scroll {
     display: block;
 }
 
+@media (max-width: 768px) {
+    .video-section {
+        height: auto;
+    }
+    .video-section video {
+        height: auto;
+        object-fit: contain;
+    }
+}
+
 /* Butterfly Animation Container */
 #butterfly-container {
     position: fixed;
