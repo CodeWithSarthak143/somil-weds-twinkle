@@ -475,7 +475,8 @@ body {
     pointer-events: none;
 }
 
-.welcome-gate-left, .welcome-gate-right {
+.welcome-gate-left,
+.welcome-gate-right {
     position: absolute;
     top: 0;
     width: 50vw;
@@ -503,9 +504,10 @@ body {
     height: 100vh;
     background-image: url('images/Wedding_invitation_card_design_2K_202608262013.jpeg');
     background-size: cover;
-    background-position: center 60%;
+    background-position: center 30%;
     background-repeat: no-repeat;
-    background-color: #0d0f12; /* Match website background */
+    background-color: #0d0f12;
+    /* Match website background */
 }
 
 .welcome-gate-left .gate-inner {
@@ -521,7 +523,7 @@ body {
     .gate-inner {
         background-size: contain;
     }
-    
+
     .welcome-overlay {
         background-color: #0d0f12;
     }
@@ -584,7 +586,7 @@ body {
     font-size: 1.6rem;
     color: #ffffff;
     margin: 5px 0;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     line-height: 1.1;
 }
 
