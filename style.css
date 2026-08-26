@@ -523,6 +523,12 @@ body.no-scroll {
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: filter 1.5s ease;
+    filter: brightness(1);
+}
+
+.video-section.masked video {
+    filter: brightness(1.5);
 }
 
 @media (max-width: 768px) {

@@ -140,15 +140,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         videoObserver.observe(weddingVideo);
 
-        // Trigger loop and overlay when first playback finishes
-        weddingVideo.addEventListener('ended', () => {
-            if (videoSection) {
-                videoSection.classList.add('masked');
+        // Trigger loop and overlay 1 second before first playback finishes
+        let maskTriggered = false;
+
+        weddingVideo.addEventListener('timeupdate', () => {
+            if (weddingVideo.duration && (weddingVideo.duration - weddingVideo.currentTime <= 1.0)) {
+                if (!maskTriggered) {
+                    maskTriggered = true;
+                    if (videoSection) {
+                        videoSection.classList.add('masked');
+                    }
+                    weddingVideo.loop = true;
+                }
+            } else if (weddingVideo.currentTime < 1.0) {
+                // Reset mask state if video restarts from the beginning
+                maskTriggered = false;
+                if (videoSection) {
+                    videoSection.classList.remove('masked');
+                }
+                weddingVideo.loop = false;
             }
-            weddingVideo.loop = true;
-            weddingVideo.play().catch(err => {
-                console.log("Video looping failed:", err);
-            });
         });
     }
 
