@@ -12,16 +12,22 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Welcome Overlay for Autoplay Music -->
+    <!-- Welcome Split Overlay for Autoplay Music -->
     <div id="welcome-overlay" class="welcome-overlay">
-        <div class="welcome-card">
-            <span class="welcome-ornament">&#10022;</span>
-            <p class="welcome-subtitle">The Divine Invitation of</p>
-            <h2 class="welcome-title">Somil &amp; Twinkle</h2>
-            <p class="welcome-hint">🔊 Please turn on your sound</p>
-            <button id="enter-btn" class="enter-btn">Open Invitation</button>
-            <span class="welcome-ornament">&#10022;</span>
-        </div>
+        <!-- Left half of the card -->
+        <div class="welcome-gate-left"></div>
+        <!-- Right half of the card -->
+        <div class="welcome-gate-right"></div>
+        
+        <!-- Center Seal Button -->
+        <button id="enter-btn" class="enter-btn-seal" aria-label="Open Invitation">
+            <div class="seal-inner">
+                <span class="seal-ornament">&#10022;</span>
+                <span class="seal-text-1">Somil &amp; Twinkle</span>
+                <span class="seal-text-2">Open Invite</span>
+                <span class="seal-ornament">&#10022;</span>
+            </div>
+        </button>
     </div>
 
     <!-- Background Music Audio -->

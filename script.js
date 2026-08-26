@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Remove welcome screen from DOM after transition finishes
             setTimeout(() => {
                 welcomeOverlay.remove();
-            }, 800);
+            }, 1200);
         });
     }
 
