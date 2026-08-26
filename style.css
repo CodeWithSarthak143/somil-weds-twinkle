@@ -505,6 +505,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: #0d0f12; /* Match website background */
 }
 
 .welcome-gate-left .gate-inner {
@@ -513,6 +514,17 @@ body {
 
 .welcome-gate-right .gate-inner {
     right: 0;
+}
+
+/* Mobile override to prevent cropping the wedding card graphic details */
+@media (max-width: 768px) {
+    .gate-inner {
+        background-size: contain;
+    }
+    
+    .welcome-overlay {
+        background-color: #0d0f12;
+    }
 }
 
 /* Open State Animations */
