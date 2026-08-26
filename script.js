@@ -121,4 +121,22 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateScene, { passive: true });
     window.addEventListener('resize', updateScene);
     updateScene();
+
+    // IntersectionObserver to autoplay wedding video when scrolled into view
+    const weddingVideo = document.getElementById('wedding-video');
+    if (weddingVideo) {
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    weddingVideo.play().catch(err => {
+                        console.log("Wedding video autoplay failed or blocked:", err);
+                    });
+                } else {
+                    weddingVideo.pause();
+                }
+            });
+        }, { threshold: 0.15 });
+
+        videoObserver.observe(weddingVideo);
+    }
 });
