@@ -532,7 +532,7 @@ body {
 /* Center Seal Button */
 .enter-btn-seal {
     position: absolute;
-    top: 50%;
+    top: 58%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
     width: 160px;
@@ -617,7 +617,7 @@ body.no-scroll {
     }
 
     .enter-btn-seal {
-        top: 68%; /* Move the seal circle lower on mobile */
+        top: 72%; /* Move the seal circle lower on mobile */
     }
 }
 
