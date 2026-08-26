@@ -529,7 +529,8 @@ body {
     }
 
     .enter-btn-seal {
-        top: 58%; /* Move the seal circle a little below center */
+        top: 88%;
+        /* Move the seal circle a little below center */
     }
 }
 
