@@ -617,7 +617,7 @@ body.no-scroll {
     }
 
     .enter-btn-seal {
-        top: 88%; /* Move the seal circle lower on mobile */
+        top: 68%; /* Move the seal circle lower on mobile */
     }
 }
 
