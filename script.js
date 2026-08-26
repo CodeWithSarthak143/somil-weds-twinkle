@@ -152,13 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     weddingVideo.loop = true;
                 }
-            } else if (weddingVideo.currentTime < 1.0) {
-                // Reset mask state if video restarts from the beginning
-                maskTriggered = false;
-                if (videoSection) {
-                    videoSection.classList.remove('masked');
-                }
-                weddingVideo.loop = false;
             }
         });
     }
