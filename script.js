@@ -154,16 +154,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const randomColor = butterflyColors[Math.floor(Math.random() * butterflyColors.length)];
         butterfly.style.color = randomColor;
 
-        // Build wing structure
+        // Build wing and body structure
         const wings = document.createElement('div');
         wings.className = 'wings';
         const leftWing = document.createElement('div');
         leftWing.className = 'wing-left';
         const rightWing = document.createElement('div');
         rightWing.className = 'wing-right';
+        const bodyLine = document.createElement('div');
+        bodyLine.className = 'body-line';
 
         wings.appendChild(leftWing);
         wings.appendChild(rightWing);
+        wings.appendChild(bodyLine);
         butterfly.appendChild(wings);
 
         // Set initial random position
