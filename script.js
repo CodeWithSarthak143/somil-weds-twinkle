@@ -8,34 +8,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const shineFlash = document.getElementById('shine-flash');
     const saveDatesCard = document.getElementById('save-dates-card');
     const bgMusic = document.getElementById('bg-music');
+    const musicToggle = document.getElementById('music-toggle');
 
     let flashTriggered = false;
 
+    // Sync button state (icon & rotation) with actual audio playback status
+    function updateMusicButtonState() {
+        if (!bgMusic || !musicToggle) return;
+        const iconSpan = musicToggle.querySelector('.music-icon');
+        if (bgMusic.paused) {
+            musicToggle.classList.remove('playing');
+            if (iconSpan) iconSpan.textContent = '🔇';
+        } else {
+            musicToggle.classList.add('playing');
+            if (iconSpan) iconSpan.textContent = '🎵';
+        }
+    }
+
+    // Toggle play/pause
+    function toggleMusic() {
+        if (!bgMusic) return;
+        if (bgMusic.paused) {
+            bgMusic.play().then(() => {
+                updateMusicButtonState();
+            }).catch(e => {
+                console.log('Playback failed on toggle:', e);
+            });
+        } else {
+            bgMusic.pause();
+            updateMusicButtonState();
+        }
+    }
+
+    if (musicToggle) {
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent triggering document-wide listeners
+            toggleMusic();
+        });
+    }
+
     // Browser autoplay policy requires user interaction before audio plays.
-    // Trigger audio play on first touch, click, or scroll anywhere.
+    // Trigger audio play on first click or touch anywhere on the page.
     function playAudioOnInteraction() {
         if (bgMusic && bgMusic.paused) {
             bgMusic.play().then(() => {
-                console.log('Music started successfully.');
-                // Remove listeners once playback starts successfully
-                window.removeEventListener('click', playAudioOnInteraction);
-                window.removeEventListener('touchstart', playAudioOnInteraction);
-                window.removeEventListener('scroll', playAudioOnInteraction);
+                console.log('Music started successfully via user interaction.');
+                updateMusicButtonState();
+                removeInteractionListeners();
             }).catch(e => {
                 console.log('Audio autoplay blocked, waiting for interaction:', e);
             });
         }
     }
 
+    function removeInteractionListeners() {
+        window.removeEventListener('click', playAudioOnInteraction);
+        window.removeEventListener('touchstart', playAudioOnInteraction);
+    }
+
     // Try playing immediately
     if (bgMusic) {
         bgMusic.play().then(() => {
             console.log('Music autoplayed on load.');
+            updateMusicButtonState();
         }).catch(() => {
             console.log('Autoplay blocked. Registering interaction listeners.');
+            updateMusicButtonState();
             window.addEventListener('click', playAudioOnInteraction);
             window.addEventListener('touchstart', playAudioOnInteraction);
-            window.addEventListener('scroll', playAudioOnInteraction);
         });
     }
 
