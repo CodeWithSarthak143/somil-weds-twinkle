@@ -518,21 +518,7 @@ body {
     right: 0;
 }
 
-/* Mobile override to prevent cropping the wedding card graphic details */
-@media (max-width: 768px) {
-    .gate-inner {
-        background-size: contain;
-    }
 
-    .welcome-overlay {
-        background-color: #0d0f12;
-    }
-
-    .enter-btn-seal {
-        top: 88%;
-        /* Move the seal circle a little below center */
-    }
-}
 
 /* Open State Animations */
 .welcome-overlay.fade-out .welcome-gate-left {
@@ -618,6 +604,21 @@ body {
 /* Prevent scrolling while welcome screen is active */
 body.no-scroll {
     overflow: hidden;
+}
+
+/* Mobile override to prevent cropping the wedding card graphic details & move button */
+@media (max-width: 768px) {
+    .gate-inner {
+        background-size: contain;
+    }
+
+    .welcome-overlay {
+        background-color: #0d0f12;
+    }
+
+    .enter-btn-seal {
+        top: 88%; /* Move the seal circle lower on mobile */
+    }
 }
 
 /* Screen 2: Video Section */
