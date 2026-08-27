@@ -1162,34 +1162,8 @@ body.no-scroll {
 
 .gallery-callout-text.text-right {
     margin-right: 40px;
-    margin-top: 250px; /* Pushes the right callout down below the polaroids flow line */
+    margin-top: 40px; /* Align to the same height as the left callout */
     text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 15px;
-}
-
-/* Let's Celebrate Button */
-.gallery-btn {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: #0d0f12;
-    background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%); /* Gold gradient background matching main buttons */
-    border: none;
-    padding: 12px 30px;
-    border-radius: 25px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.gallery-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
-    filter: brightness(1.1);
 }
 
 /* Somil & Twinkle signature logo typography overlaying back */
