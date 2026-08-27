@@ -1167,19 +1167,21 @@ body.no-scroll {
 }
 
 /* Somil & Twinkle signature logo typography overlaying back */
+/* Somil & Twinkle signature logo typography overlaying back */
 .branding-signature-container {
-    position: absolute;
-    bottom: 12%;
-    left: 5%;
-    width: 90%;
+    position: relative;
+    margin-top: 15vh; /* Shifts the signatures down */
+    width: 100%;
     pointer-events: none;
-    z-index: 8; /* Sent to back, below all text overlays, polaroids and feathers */
+    z-index: 8;
+    text-align: center;
 }
 
 .sig-somil, .sig-twinkle {
     font-weight: normal;
     line-height: 0.7;
     margin: 0;
+    display: block;
 }
 
 .sig-somil {
@@ -1194,7 +1196,6 @@ body.no-scroll {
     font-family: 'Great Vibes', cursive;
     font-size: 10rem;
     color: rgba(212, 175, 55, 0.15); /* Luxury subtle golden calligraphy watermark */
-    margin-left: 25%;
     transform: translateY(-40px);
 }
 
@@ -1205,7 +1206,7 @@ body.no-scroll {
     align-items: flex-end;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding-top: 30px;
-    margin-top: 50px;
+    margin-top: 30px;
     z-index: 15;
 }
 
@@ -1241,13 +1242,16 @@ body.no-scroll {
         transform: none !important; /* Remove rotation tilts to look tidy on mobile */
     }
 
+    .branding-signature-container {
+        margin-top: 30vh; /* Shifts the brand signature down by 30% of screen height to prevent overlap in mobile views */
+    }
+
     .sig-somil {
         font-size: 7rem;
     }
 
     .sig-twinkle {
         font-size: 6rem;
-        margin-left: 15%;
         transform: translateY(-20px);
     }
 }
