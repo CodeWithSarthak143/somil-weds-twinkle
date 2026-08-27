@@ -116,6 +116,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+
+        // --- Screen 3 Parallax Photo & Feather Gallery ---
+        const galleryEl = document.getElementById('gallery-parallax');
+        if (galleryEl) {
+            const rect = galleryEl.getBoundingClientRect();
+            // Check if section is visible in/near viewport
+            if (rect.top < windowHeight && rect.bottom > 0) {
+                // Calculate scroll distance relative to the top of the gallery section
+                const relativeScroll = window.scrollY - (galleryEl.offsetTop - windowHeight);
+
+                // Parallax Polaroids
+                const polaroids = galleryEl.querySelectorAll('.polaroid-card');
+                polaroids.forEach(card => {
+                    const speed = parseFloat(card.getAttribute('data-speed')) || 0.1;
+                    const yTranslate = relativeScroll * speed;
+                    // Retain the base rotation styling from CSS
+                    let baseRotation = 0;
+                    if (card.classList.contains('card-left')) baseRotation = -6;
+                    if (card.classList.contains('card-center')) baseRotation = 2;
+                    if (card.classList.contains('card-right')) baseRotation = 5;
+
+                    card.style.transform = `translateY(${yTranslate}px) rotate(${baseRotation}deg)`;
+                });
+
+                // Parallax Feathers
+                const feathers = galleryEl.querySelectorAll('.parallax-feather');
+                feathers.forEach(feather => {
+                    const speed = parseFloat(feather.getAttribute('data-speed')) || 0.2;
+                    const yTranslate = relativeScroll * speed;
+                    let baseRotate = 0;
+                    let baseScale = '';
+                    if (feather.classList.contains('f1')) baseRotate = 35;
+                    if (feather.classList.contains('f2')) baseRotate = -45;
+                    if (feather.classList.contains('f3')) baseRotate = -10;
+                    if (feather.classList.contains('f4')) {
+                        baseRotate = 80;
+                        baseScale = ' scaleX(-1)';
+                    }
+                    feather.style.transform = `translateY(${yTranslate}px) rotate(${baseRotate}deg)${baseScale}`;
+                });
+            }
+        }
     }
 
     window.addEventListener('scroll', updateScene, { passive: true });

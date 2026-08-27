@@ -1000,3 +1000,301 @@ body.no-scroll {
         letter-spacing: 1px;
     }
 }
+
+/* ==========================================
+   Parallax Photo & Feather Gallery Section
+   ========================================== */
+.gallery-parallax-section {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    min-height: 120vh;
+    padding: 120px 8%;
+    background-color: #f2ebe4; /* Premium warm ivory-sand background matching the mockup */
+    color: #1a1a1a;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Floating Feathers (Styling & Filters to match mockup feather tints) */
+.parallax-feather {
+    position: absolute;
+    width: 140px;
+    height: auto;
+    pointer-events: none;
+    z-index: 12;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.15)) hue-rotate(-20deg) brightness(0.6) saturate(0.85); /* Gives a deep reddish/plum tint to the feathers */
+    mix-blend-mode: multiply;
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+}
+
+.parallax-feather.f1 {
+    top: 15%;
+    left: 4%;
+    transform: rotate(35deg);
+    width: 160px;
+}
+
+.parallax-feather.f2 {
+    top: 10%;
+    right: 5%;
+    transform: rotate(-45deg);
+    width: 130px;
+}
+
+.parallax-feather.f3 {
+    bottom: 30%;
+    left: 45%;
+    transform: rotate(-10deg);
+    width: 190px;
+    z-index: 15; /* Sits in front of typography */
+}
+
+.parallax-feather.f4 {
+    bottom: 45%;
+    right: 2%;
+    transform: rotate(80deg) scaleX(-1);
+    width: 120px;
+}
+
+/* Polaroid Wrapper & Grid cluster */
+.polaroids-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 60px 0;
+    min-height: 480px;
+    z-index: 11;
+}
+
+.polaroid-card {
+    background-color: #ffffff;
+    padding: 16px 16px 28px 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12), 0 5px 15px rgba(0, 0, 0, 0.06);
+    border-radius: 2px;
+    width: 290px;
+    transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+    will-change: transform;
+    flex-shrink: 0;
+}
+
+.polaroid-card:hover {
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+}
+
+.polaroid-image-container {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    background-color: #eee;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.polaroid-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.polaroid-card:hover .polaroid-image-container img {
+    transform: scale(1.05);
+}
+
+/* Captions inside Polaroids */
+.polaroid-caption {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.8rem;
+    text-align: center;
+    color: #4a3b32;
+    margin-top: 15px;
+    line-height: 1.2;
+}
+
+/* Polaroid Tilted Positioning */
+.card-left {
+    transform: rotate(-6deg) translateY(20px);
+}
+
+.card-center {
+    transform: rotate(2deg) translateY(-20px);
+    z-index: 12;
+}
+
+.card-right {
+    transform: rotate(5deg) translateY(10px);
+}
+
+/* Gallery Callouts (Side Text Phrases) */
+.gallery-callout-text {
+    max-width: 250px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #4a4a4a;
+    z-index: 13;
+}
+
+.gallery-callout-text.text-left {
+    align-self: flex-start;
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+.gallery-callout-text.text-right {
+    align-self: flex-end;
+    margin-right: 40px;
+    margin-bottom: 20px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+/* Let's Celebrate Button */
+.gallery-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #ffffff;
+    background-color: #12192c; /* Deep luxury navy matching the mockup button */
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(18, 25, 44, 0.25);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.gallery-btn:hover {
+    background-color: #bf953f; /* Gold accent on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(191, 149, 63, 0.35);
+}
+
+/* Somil & Twinkle signature logo typography overlaying back */
+.branding-signature-container {
+    position: absolute;
+    bottom: 12%;
+    left: 5%;
+    width: 90%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.sig-somil, .sig-twinkle {
+    font-weight: normal;
+    line-height: 0.7;
+    margin: 0;
+}
+
+.sig-somil {
+    font-family: 'Playfair Display', serif;
+    font-size: 11.5rem;
+    letter-spacing: -4px;
+    color: rgba(94, 21, 35, 0.08); /* Wine-burgundy tinted transparent fill for backdrop */
+    text-transform: uppercase;
+}
+
+.sig-twinkle {
+    font-family: 'Great Vibes', cursive;
+    font-size: 10rem;
+    color: rgba(94, 21, 35, 0.85); /* Deep royal burgundy calligraphy */
+    margin-left: 25%;
+    transform: translateY(-40px);
+}
+
+/* Footer layout statement & Scroll details */
+.gallery-footer-statement {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding-top: 30px;
+    margin-top: 50px;
+    z-index: 13;
+}
+
+.gallery-footer-statement p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    max-width: 420px;
+    line-height: 1.6;
+    color: #2b2b2b;
+}
+
+.scroll-down-more {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #4a4a4a;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+}
+
+/* Responsive adjustment rules for Parallax Section */
+@media (max-width: 992px) {
+    .polaroids-wrapper {
+        flex-direction: column;
+        gap: 30px;
+        min-height: auto;
+    }
+
+    .polaroid-card {
+        width: 320px;
+        transform: none !important; /* Remove rotation tilts to look tidy on mobile */
+    }
+
+    .sig-somil {
+        font-size: 7rem;
+    }
+
+    .sig-twinkle {
+        font-size: 6rem;
+        margin-left: 15%;
+        transform: translateY(-20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-parallax-section {
+        padding: 60px 5%;
+    }
+
+    .gallery-callout-text.text-left,
+    .gallery-callout-text.text-right {
+        max-width: 100%;
+        text-align: center;
+        align-self: center;
+        margin: 20px 0;
+    }
+
+    .gallery-callout-text.text-right {
+        align-items: center;
+    }
+
+    .gallery-footer-statement {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .sig-somil {
+        font-size: 5rem;
+    }
+
+    .sig-twinkle {
+        font-size: 4.5rem;
+        transform: translateY(-10px);
+    }
+}
