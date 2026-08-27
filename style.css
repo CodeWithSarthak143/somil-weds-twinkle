@@ -1066,9 +1066,9 @@ body.no-scroll {
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin: 60px 0;
+    margin: -100px 0 60px 0; /* Changed margin to move photos up */
     min-height: 480px;
-    z-index: 12; /* High z-index to stand out but keep behind other main page wrappers if needed */
+    z-index: 11; /* Keep behind the content layer texts */
 }
 
 .polaroid-card {
@@ -1126,11 +1126,22 @@ body.no-scroll {
 
 .card-center {
     transform: rotate(2deg) translateY(-20px);
-    z-index: 13;
+    z-index: 12;
 }
 
 .card-right {
     transform: rotate(5deg) translateY(10px);
+}
+
+/* Content layer enclosing left & right callouts to separate them from the grid flow */
+.gallery-content-layer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    pointer-events: none;
+    position: relative;
+    z-index: 15; /* Sits on top of the polaroids cluster */
 }
 
 /* Gallery Callouts (Side Text Phrases) */
@@ -1140,20 +1151,18 @@ body.no-scroll {
     font-size: 1.15rem;
     line-height: 1.6;
     color: #e5e9f0; /* Matches main site light text color */
-    z-index: 15; /* Sits clearly on top of overlapping elements */
+    pointer-events: auto; /* Re-enable pointer events for buttons inside */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .gallery-callout-text.text-left {
-    align-self: flex-start;
     margin-left: 20px;
     margin-top: 40px;
 }
 
 .gallery-callout-text.text-right {
-    align-self: flex-end;
     margin-right: 40px;
-    margin-bottom: 20px;
+    margin-top: 250px; /* Pushes the right callout down below the polaroids flow line */
     text-align: right;
     display: flex;
     flex-direction: column;
@@ -1273,16 +1282,23 @@ body.no-scroll {
         padding: 60px 5%;
     }
 
+    .gallery-content-layer {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
     .gallery-callout-text.text-left,
     .gallery-callout-text.text-right {
         max-width: 100%;
         text-align: center;
         align-self: center;
-        margin: 20px 0;
+        margin: 10px 0;
     }
 
     .gallery-callout-text.text-right {
         align-items: center;
+        margin-top: 20px; /* Reset top margin override on mobile devices */
     }
 
     .gallery-footer-statement {
