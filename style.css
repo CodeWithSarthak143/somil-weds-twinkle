@@ -1010,8 +1010,8 @@ body.no-scroll {
     width: 100%;
     min-height: 120vh;
     padding: 120px 8%;
-    background-color: #f2ebe4; /* Premium warm ivory-sand background matching the mockup */
-    color: #1a1a1a;
+    background-color: #0d0f12; /* Dark theme background matching the main website */
+    color: #e5e9f0; /* Light text color matching the body theme */
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1024,9 +1024,8 @@ body.no-scroll {
     width: 140px;
     height: auto;
     pointer-events: none;
-    z-index: 12;
-    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.15)) hue-rotate(-20deg) brightness(0.6) saturate(0.85); /* Gives a deep reddish/plum tint to the feathers */
-    mix-blend-mode: multiply;
+    z-index: 9; /* Kept behind all text overlays and polaroids (z-index: 11+) */
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4)) hue-rotate(-20deg) brightness(0.7) saturate(0.85); /* Gives a deep reddish/plum tint to the feathers */
     transition: transform 0.1s ease-out;
     will-change: transform;
 }
@@ -1050,7 +1049,7 @@ body.no-scroll {
     left: 45%;
     transform: rotate(-10deg);
     width: 190px;
-    z-index: 15; /* Sits in front of typography */
+    z-index: 9; /* Kept behind overlays to avoid covering texts */
 }
 
 .parallax-feather.f4 {
@@ -1069,14 +1068,15 @@ body.no-scroll {
     gap: 40px;
     margin: 60px 0;
     min-height: 480px;
-    z-index: 11;
+    z-index: 12; /* High z-index to stand out but keep behind other main page wrappers if needed */
 }
 
 .polaroid-card {
-    background-color: #ffffff;
+    background-color: #12161f; /* Premium dark card background matching the dark gold-accented layout */
+    border: 1px solid rgba(255, 215, 0, 0.2); /* Gold border trace */
     padding: 16px 16px 28px 16px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12), 0 5px 15px rgba(0, 0, 0, 0.06);
-    border-radius: 2px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 5px 15px rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
     width: 290px;
     transition: transform 0.1s ease-out, box-shadow 0.3s ease;
     will-change: transform;
@@ -1084,15 +1084,16 @@ body.no-scroll {
 }
 
 .polaroid-card:hover {
-    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 25px 45px rgba(255, 215, 0, 0.12);
+    border-color: rgba(255, 215, 0, 0.5);
 }
 
 .polaroid-image-container {
     width: 100%;
     height: 300px;
     overflow: hidden;
-    background-color: #eee;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: #0d0f12;
+    border: 1px solid rgba(255, 215, 0, 0.1);
 }
 
 .polaroid-image-container img {
@@ -1112,9 +1113,10 @@ body.no-scroll {
     font-family: 'Great Vibes', cursive;
     font-size: 1.8rem;
     text-align: center;
-    color: #4a3b32;
+    color: #ffd700; /* Gold color matching the site's accent system */
     margin-top: 15px;
     line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Polaroid Tilted Positioning */
@@ -1124,7 +1126,7 @@ body.no-scroll {
 
 .card-center {
     transform: rotate(2deg) translateY(-20px);
-    z-index: 12;
+    z-index: 13;
 }
 
 .card-right {
@@ -1137,8 +1139,9 @@ body.no-scroll {
     font-family: 'Playfair Display', serif;
     font-size: 1.15rem;
     line-height: 1.6;
-    color: #4a4a4a;
-    z-index: 13;
+    color: #e5e9f0; /* Matches main site light text color */
+    z-index: 15; /* Sits clearly on top of overlapping elements */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .gallery-callout-text.text-left {
@@ -1164,20 +1167,20 @@ body.no-scroll {
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 2px;
-    color: #ffffff;
-    background-color: #12192c; /* Deep luxury navy matching the mockup button */
+    color: #0d0f12;
+    background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%); /* Gold gradient background matching main buttons */
     border: none;
     padding: 12px 30px;
     border-radius: 25px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(18, 25, 44, 0.25);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .gallery-btn:hover {
-    background-color: #bf953f; /* Gold accent on hover */
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(191, 149, 63, 0.35);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+    filter: brightness(1.1);
 }
 
 /* Somil & Twinkle signature logo typography overlaying back */
@@ -1187,7 +1190,7 @@ body.no-scroll {
     left: 5%;
     width: 90%;
     pointer-events: none;
-    z-index: 10;
+    z-index: 8; /* Sent to back, below all text overlays, polaroids and feathers */
 }
 
 .sig-somil, .sig-twinkle {
@@ -1200,14 +1203,14 @@ body.no-scroll {
     font-family: 'Playfair Display', serif;
     font-size: 11.5rem;
     letter-spacing: -4px;
-    color: rgba(94, 21, 35, 0.08); /* Wine-burgundy tinted transparent fill for backdrop */
+    color: rgba(255, 255, 255, 0.03); /* Faint white background watermark */
     text-transform: uppercase;
 }
 
 .sig-twinkle {
     font-family: 'Great Vibes', cursive;
     font-size: 10rem;
-    color: rgba(94, 21, 35, 0.85); /* Deep royal burgundy calligraphy */
+    color: rgba(212, 175, 55, 0.15); /* Luxury subtle golden calligraphy watermark */
     margin-left: 25%;
     transform: translateY(-40px);
 }
@@ -1217,10 +1220,10 @@ body.no-scroll {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding-top: 30px;
     margin-top: 50px;
-    z-index: 13;
+    z-index: 15;
 }
 
 .gallery-footer-statement p {
@@ -1228,7 +1231,7 @@ body.no-scroll {
     font-size: 1.1rem;
     max-width: 420px;
     line-height: 1.6;
-    color: #2b2b2b;
+    color: #e5e9f0;
 }
 
 .scroll-down-more {
@@ -1236,7 +1239,7 @@ body.no-scroll {
     font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 2px;
-    color: #4a4a4a;
+    color: #ffd700; /* Gold color */
     text-transform: uppercase;
     animation: bounce 2s infinite;
 }
