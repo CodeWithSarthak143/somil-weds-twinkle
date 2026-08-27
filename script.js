@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         }
-        // --- Interactive Timeline Progress Scroll Trigger ---
+        // --- Interactive Vertical Timeline Progress Scroll Trigger ---
         const timelineProgress = document.getElementById('timeline-progress');
         const timelineSteps = document.querySelectorAll('.timeline-step');
         const contentSection = document.querySelector('.content-section');
@@ -170,32 +170,35 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Calculate progress based on how far the user has scrolled through the invite section
             // Starts drawing line when section enters center, completes when scrolled deep
-            const startReveal = rect.top - viewHeight * 0.6;
+            const startReveal = rect.top - viewHeight * 0.5;
             const scrollDistance = -startReveal;
-            const scrollRange = sectionHeight - viewHeight * 0.2;
+            const scrollRange = sectionHeight - viewHeight * 0.4;
             
             let progressPercent = 0;
             if (scrollDistance > 0) {
                 progressPercent = Math.min(100, (scrollDistance / scrollRange) * 100);
             }
             
-            // Fill line
-            const isMobile = window.innerWidth <= 600;
-            if (isMobile) {
-                timelineProgress.style.height = `${progressPercent}%`;
-                timelineProgress.style.width = `3px`;
-            } else {
-                timelineProgress.style.width = `${progressPercent}%`;
-                timelineProgress.style.height = `3px`;
-            }
+            // Vertical bar filling (now vertical on both desktop and mobile)
+            timelineProgress.style.height = `${progressPercent}%`;
+            timelineProgress.style.width = `3px`;
             
-            // Activate step points based on progress values
+            // Activate step points and animate slide-in cards based on progress values
             timelineSteps.forEach(step => {
                 const targetPercent = parseInt(step.getAttribute('data-progress')) || 0;
-                if (progressPercent >= targetPercent - 5) { // 5% buffer zone for smooth activation
+                
+                // When line reaches the step, light it up
+                if (progressPercent >= targetPercent - 5) {
                     step.classList.add('active');
                 } else {
                     step.classList.remove('active');
+                }
+
+                // If user scrolls past the threshold, make the box slide in beautifully
+                if (progressPercent >= targetPercent - 20) {
+                    step.classList.add('revealed');
+                } else {
+                    step.classList.remove('revealed');
                 }
             });
         }
