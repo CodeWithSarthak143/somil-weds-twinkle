@@ -1066,7 +1066,7 @@ body.no-scroll {
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin: -100px 0 60px 0; /* Changed margin to move photos up */
+    margin: 30vh 0 60px 0; /* Shifted down by approximately 30% viewport height to resolve desktop overlap */
     min-height: 480px;
     z-index: 11; /* Keep behind the content layer texts */
 }
@@ -1233,6 +1233,7 @@ body.no-scroll {
         flex-direction: column;
         gap: 30px;
         min-height: auto;
+        margin: 50px 0 30px 0; /* Add top margin on mobile viewports to push below headers */
     }
 
     .polaroid-card {
