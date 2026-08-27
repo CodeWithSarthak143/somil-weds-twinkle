@@ -442,6 +442,26 @@ body {
     margin-top: 25px;
 }
 
+/* Developer Credit Footer */
+.developer-credit-footer {
+    width: 100%;
+    text-align: center;
+    padding: 30px 10px 10px 10px;
+    z-index: 10;
+    position: relative;
+}
+
+.developer-credit-footer p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(229, 233, 240, 0.45); /* Subtle grey matching the site content */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+
 /* Responsive adjustments */
 @media (max-width: 600px) {
     .parallax-overlay-text h1 {
