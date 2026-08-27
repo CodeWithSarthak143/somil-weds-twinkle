@@ -446,9 +446,10 @@ body {
 .developer-credit-footer {
     width: 100%;
     text-align: center;
-    padding: 30px 10px 10px 10px;
+    padding: 50px 10px 40px 10px; /* Increased bottom padding */
     z-index: 10;
     position: relative;
+    background-color: #0b0d10; /* Grounded background block at the absolute end */
 }
 
 .developer-credit-footer p {
