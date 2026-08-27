@@ -158,6 +158,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         }
+        // --- Interactive Timeline Progress Scroll Trigger ---
+        const timelineProgress = document.getElementById('timeline-progress');
+        const timelineSteps = document.querySelectorAll('.timeline-step');
+        const contentSection = document.querySelector('.content-section');
+        
+        if (timelineProgress && contentSection) {
+            const rect = contentSection.getBoundingClientRect();
+            const sectionHeight = rect.height;
+            const viewHeight = window.innerHeight;
+            
+            // Calculate progress based on how far the user has scrolled through the invite section
+            // Starts drawing line when section enters center, completes when scrolled deep
+            const startReveal = rect.top - viewHeight * 0.6;
+            const scrollDistance = -startReveal;
+            const scrollRange = sectionHeight - viewHeight * 0.2;
+            
+            let progressPercent = 0;
+            if (scrollDistance > 0) {
+                progressPercent = Math.min(100, (scrollDistance / scrollRange) * 100);
+            }
+            
+            // Fill line
+            const isMobile = window.innerWidth <= 600;
+            if (isMobile) {
+                timelineProgress.style.height = `${progressPercent}%`;
+                timelineProgress.style.width = `3px`;
+            } else {
+                timelineProgress.style.width = `${progressPercent}%`;
+                timelineProgress.style.height = `3px`;
+            }
+            
+            // Activate step points based on progress values
+            timelineSteps.forEach(step => {
+                const targetPercent = parseInt(step.getAttribute('data-progress')) || 0;
+                if (progressPercent >= targetPercent - 5) { // 5% buffer zone for smooth activation
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+        }
     }
 
     window.addEventListener('scroll', updateScene, { passive: true });
