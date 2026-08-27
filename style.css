@@ -338,6 +338,8 @@ body {
     padding: 150px 20px 100px 20px;
     /* Add top padding to create physical separation (Third Screen) */
     display: flex;
+    flex-direction: column; /* Force vertical stacking of the invitation card and standalone footer */
+    align-items: center;
     justify-content: center;
 }
 
@@ -446,10 +448,9 @@ body {
 .developer-credit-footer {
     width: 100%;
     text-align: center;
-    padding: 50px 10px 40px 10px; /* Increased bottom padding */
+    padding: 60px 10px 10px 10px; /* Added spacing from the card above */
     z-index: 10;
     position: relative;
-    background-color: #0b0d10; /* Grounded background block at the absolute end */
 }
 
 .developer-credit-footer p {
