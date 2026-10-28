@@ -437,6 +437,54 @@ body {
     font-size: 0.8rem;
 }
 
+.venue-link {
+    text-decoration: none;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.venue-link:hover {
+    transform: translateY(-2px);
+}
+
+.venue-link .venue-title {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.venue-link:hover .venue-title {
+    color: #ffd700;
+}
+
+.venue-map-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    color: #ffd700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    padding: 3px 10px;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.venue-link:hover .venue-map-badge {
+    background: rgba(212, 175, 55, 0.28);
+    border-color: rgba(255, 215, 0, 0.7);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+}
+
 .footer-note {
     font-size: 0.95rem;
     font-style: italic;
@@ -1529,5 +1577,253 @@ body.no-scroll {
 
     .step-event {
         font-size: 1rem;
+    }
+}
+
+/* ==========================================================================
+   Fixed Side Action Buttons (Bottom-Right)
+   ========================================================================== */
+
+.side-action-btns {
+    position: fixed;
+    right: 22px;
+    bottom: 24px;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+    pointer-events: auto;
+}
+
+/* Individual Button Base */
+.side-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: linear-gradient(135deg, rgba(18, 22, 32, 0.92) 0%, rgba(10, 13, 20, 0.97) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(212, 175, 55, 0.45);
+    border-radius: 50px;
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.55),
+        0 0 12px rgba(212, 175, 55, 0.15),
+        inset 0 1px 1px rgba(255, 215, 0, 0.12);
+    transition:
+        transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+}
+
+/* Light sweep on hover */
+.side-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -140%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.15), rgba(255, 255, 255, 0.28), transparent);
+    transform: skewX(-25deg);
+    transition: left 0.65s ease;
+    pointer-events: none;
+}
+
+.side-btn:hover::before {
+    left: 160%;
+}
+
+/* Icon circle */
+.side-btn-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.side-btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Label */
+.side-btn-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+    user-select: none;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Hover states */
+.side-btn:hover {
+    transform: translateX(-4px) scale(1.03);
+    border-color: rgba(255, 215, 0, 0.85);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.75),
+        0 0 22px rgba(255, 215, 0, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.side-btn:hover .side-btn-icon {
+    transform: scale(1.1);
+}
+
+.side-btn:active {
+    transform: translateX(-2px) scale(0.97);
+}
+
+/* --- Residence Button --- */
+.side-btn-residence .side-btn-icon {
+    background: radial-gradient(circle at 35% 35%, #ffe066, #d4af37 70%, #a8850f);
+    box-shadow: 0 3px 10px rgba(212, 175, 55, 0.45);
+}
+
+.side-btn-residence .side-btn-icon svg {
+    stroke: #0d0f12;
+}
+
+.side-btn-residence .side-btn-label {
+    color: #ffd700;
+}
+
+/* --- Resort Button --- */
+.side-btn-resort .side-btn-icon {
+    background: radial-gradient(circle at 35% 35%, #7ee8fa, #4fb3d8 70%, #2980b9);
+    box-shadow: 0 3px 10px rgba(79, 179, 216, 0.45);
+}
+
+.side-btn-resort .side-btn-icon svg {
+    stroke: #0d0f12;
+}
+
+.side-btn-resort .side-btn-label {
+    color: #7ee8fa;
+}
+
+.side-btn-resort:hover {
+    border-color: rgba(79, 179, 216, 0.85);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.75),
+        0 0 22px rgba(79, 179, 216, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* --- Music Toggle Button --- */
+.side-btn-music .side-btn-icon {
+    background: radial-gradient(circle at 35% 35%, #f0a0ff, #c56cf0 70%, #8e44ad);
+    box-shadow: 0 3px 10px rgba(197, 108, 240, 0.45);
+}
+
+.side-btn-music .side-btn-icon svg {
+    stroke: #0d0f12;
+}
+
+.side-btn-music .side-btn-label {
+    color: #e0a0ff;
+}
+
+.side-btn-music:hover {
+    border-color: rgba(197, 108, 240, 0.85);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.75),
+        0 0 22px rgba(197, 108, 240, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Music icon toggle visibility */
+.side-btn-music .music-icon-off {
+    display: none;
+}
+
+.side-btn-music.music-paused .music-icon-on {
+    display: none;
+}
+
+.side-btn-music.music-paused .music-icon-off {
+    display: block;
+}
+
+.side-btn-music.music-paused .side-btn-icon {
+    background: radial-gradient(circle at 35% 35%, #aaa, #777 70%, #555);
+    box-shadow: 0 3px 10px rgba(120, 120, 120, 0.35);
+}
+
+.side-btn-music.music-paused .side-btn-label {
+    color: #999;
+}
+
+/* Stagger entrance animation */
+.side-action-btns .side-btn:nth-child(1) { animation: sideBtnSlideIn 0.6s 0.1s ease-out; }
+.side-action-btns .side-btn:nth-child(2) { animation: sideBtnSlideIn 0.6s 0.25s ease-out; }
+.side-action-btns .side-btn:nth-child(3) { animation: sideBtnSlideIn 0.6s 0.4s ease-out; }
+
+@keyframes sideBtnSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .side-action-btns {
+        right: 14px;
+        bottom: 16px;
+        gap: 8px;
+    }
+
+    .side-btn {
+        padding: 8px 13px 8px 9px;
+        gap: 8px;
+    }
+
+    .side-btn-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .side-btn-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .side-btn-label {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .side-action-btns {
+        right: 10px;
+        bottom: 12px;
+    }
+
+    .side-btn {
+        padding: 7px 11px 7px 8px;
+        gap: 6px;
+    }
+
+    .side-btn-label {
+        font-size: 0.65rem;
     }
 }

@@ -618,4 +618,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Run immediately and then update every second
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // --- Music Toggle Button ---
+    const musicToggleBtn = document.getElementById('btn-music-toggle');
+    const musicLabel = document.getElementById('music-label');
+
+    function syncMusicUI() {
+        if (!musicToggleBtn || !bgMusic) return;
+        if (bgMusic.paused) {
+            musicToggleBtn.classList.add('music-paused');
+            if (musicLabel) musicLabel.textContent = 'Music Off';
+        } else {
+            musicToggleBtn.classList.remove('music-paused');
+            if (musicLabel) musicLabel.textContent = 'Music On';
+        }
+    }
+
+    if (bgMusic) {
+        bgMusic.addEventListener('play', syncMusicUI);
+        bgMusic.addEventListener('pause', syncMusicUI);
+        syncMusicUI();
+    }
+
+    if (musicToggleBtn && bgMusic) {
+        musicToggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (bgMusic.paused) {
+                bgMusic.play().catch(e => console.log('Audio playback failed:', e));
+            } else {
+                bgMusic.pause();
+            }
+        });
+    }
 });

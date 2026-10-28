@@ -164,7 +164,7 @@
             <!-- Left Polaroid -->
             <div class="polaroid-card card-left" data-speed="-0.08">
                 <div class="polaroid-image-container">
-                    <img src="images/d-ng-h-u-CCjgYjUudxE-unsplash.jpg" alt="Somil and Twinkle holding hands">
+                    <img src="images/1X7A8074.jpg" alt="Somil and Twinkle">
                 </div>
                 <p class="polaroid-caption">hand in hand</p>
             </div>
@@ -172,7 +172,7 @@
             <!-- Center Polaroid -->
             <div class="polaroid-card card-center" data-speed="-0.18">
                 <div class="polaroid-image-container">
-                    <img src="images/jonathan-borba-VX2nrLhq4h4-unsplash.jpg" alt="Somil and Twinkle hugging">
+                    <img src="images/_J7A5320.jpg" alt="Somil and Twinkle">
                 </div>
                 <p class="polaroid-caption">love is in the air</p>
             </div>
@@ -180,7 +180,7 @@
             <!-- Right Polaroid -->
             <div class="polaroid-card card-right" data-speed="-0.12">
                 <div class="polaroid-image-container">
-                    <img src="images/vows-on-the-move-p0vZplFhKYI-unsplash.jpg" alt="Somil and Twinkle dancing">
+                    <img src="images/1X7A8244.jpg" alt="Somil and Twinkle">
                 </div>
                 <p class="polaroid-caption">our forever dance</p>
             </div>
@@ -215,8 +215,11 @@
                 </div>
                 <div class="detail-item">
                     <h3>VENUE</h3>
-                    <p>Pearl Blue Hotel &amp; Resort</p>
-                    <p class="sub">Raisen Road, Bhopal</p>
+                    <a href="https://share.google/MMa8Z80DERGTak865" target="_blank" rel="noopener noreferrer" class="venue-link" title="Open Pearl Blue Hotel &amp; Resort in Google Maps">
+                        <p class="venue-title">Pearl Blue Hotel &amp; Resort</p>
+                        <p class="sub">Raisen Road, Bhopal</p>
+                        <span class="venue-map-badge">View on Map &#8599;</span>
+                    </a>
                 </div>
                 <div class="detail-item">
                     <h3>TIME</h3>
@@ -290,6 +293,61 @@
 
     <!-- Petal Container -->
     <div id="petal-container"></div>
+
+    <!-- Fixed Side Action Buttons -->
+    <div class="side-action-btns" id="side-action-btns">
+        <!-- Residence Location -->
+        <a href="https://maps.app.goo.gl/Q1gnpDAhYChif2Ux8?g_st=aw" 
+           target="_blank" rel="noopener noreferrer" 
+           class="side-btn side-btn-residence" 
+           id="btn-residence"
+           aria-label="View Residence Location">
+            <span class="side-btn-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </span>
+            <span class="side-btn-label">Residence</span>
+        </a>
+
+        <!-- Resort Location -->
+        <a href="https://share.google/MMa8Z80DERGTak865" 
+           target="_blank" rel="noopener noreferrer" 
+           class="side-btn side-btn-resort" 
+           id="btn-resort"
+           aria-label="View Resort Location">
+            <span class="side-btn-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+            </span>
+            <span class="side-btn-label">Resort</span>
+        </a>
+
+        <!-- Music Toggle -->
+        <button class="side-btn side-btn-music" 
+                id="btn-music-toggle"
+                aria-label="Toggle Background Music">
+            <span class="side-btn-icon">
+                <!-- Music ON icon (shown when music is playing) -->
+                <svg class="music-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                </svg>
+                <!-- Music OFF icon (shown when music is paused) -->
+                <svg class="music-icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                    <line x1="1" y1="1" x2="23" y2="23" stroke-width="2.5"></line>
+                </svg>
+            </span>
+            <span class="side-btn-label" id="music-label">Music On</span>
+        </button>
+    </div>
 
     <!-- Canvas Confetti Library for reveal effect -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
