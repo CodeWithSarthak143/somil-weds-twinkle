@@ -338,7 +338,8 @@ body {
     padding: 150px 20px 100px 20px;
     /* Add top padding to create physical separation (Third Screen) */
     display: flex;
-    flex-direction: column; /* Force vertical stacking of the invitation card and standalone footer */
+    flex-direction: column;
+    /* Force vertical stacking of the invitation card and standalone footer */
     align-items: center;
     justify-content: center;
 }
@@ -496,7 +497,8 @@ body {
 .developer-credit-footer {
     width: 100%;
     text-align: center;
-    padding: 60px 10px 10px 10px; /* Added spacing from the card above */
+    padding: 60px 10px 10px 10px;
+    /* Added spacing from the card above */
     z-index: 10;
     position: relative;
 }
@@ -507,7 +509,8 @@ body {
     font-weight: 400;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: rgba(229, 233, 240, 0.45); /* Subtle grey matching the site content */
+    color: rgba(229, 233, 240, 0.45);
+    /* Subtle grey matching the site content */
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     margin: 0;
 }
@@ -687,7 +690,8 @@ body.no-scroll {
     }
 
     .enter-btn-seal {
-        top: 72%; /* Move the seal circle lower on mobile */
+        top: 72%;
+        /* Move the seal circle lower on mobile */
     }
 }
 
@@ -1080,8 +1084,10 @@ body.no-scroll {
     width: 100%;
     min-height: 120vh;
     padding: 120px 8%;
-    background-color: #0d0f12; /* Dark theme background matching the main website */
-    color: #e5e9f0; /* Light text color matching the body theme */
+    background-color: #0d0f12;
+    /* Dark theme background matching the main website */
+    color: #e5e9f0;
+    /* Light text color matching the body theme */
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1094,8 +1100,10 @@ body.no-scroll {
     width: 140px;
     height: auto;
     pointer-events: none;
-    z-index: 9; /* Kept behind all text overlays and polaroids (z-index: 11+) */
-    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4)) hue-rotate(-20deg) brightness(0.7) saturate(0.85); /* Gives a deep reddish/plum tint to the feathers */
+    z-index: 9;
+    /* Kept behind all text overlays and polaroids (z-index: 11+) */
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4)) hue-rotate(-20deg) brightness(0.7) saturate(0.85);
+    /* Gives a deep reddish/plum tint to the feathers */
     transition: transform 0.1s ease-out;
     will-change: transform;
 }
@@ -1119,7 +1127,8 @@ body.no-scroll {
     left: 45%;
     transform: rotate(-10deg);
     width: 190px;
-    z-index: 9; /* Kept behind overlays to avoid covering texts */
+    z-index: 9;
+    /* Kept behind overlays to avoid covering texts */
 }
 
 .parallax-feather.f4 {
@@ -1136,14 +1145,18 @@ body.no-scroll {
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin: 30vh 0 60px 0; /* Shifted down by approximately 30% viewport height to resolve desktop overlap */
+    margin: 30vh 0 60px 0;
+    /* Shifted down by approximately 30% viewport height to resolve desktop overlap */
     min-height: 480px;
-    z-index: 11; /* Keep behind the content layer texts */
+    z-index: 11;
+    /* Keep behind the content layer texts */
 }
 
 .polaroid-card {
-    background-color: #12161f; /* Premium dark card background matching the dark gold-accented layout */
-    border: 1px solid rgba(255, 215, 0, 0.2); /* Gold border trace */
+    background-color: #12161f;
+    /* Premium dark card background matching the dark gold-accented layout */
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    /* Gold border trace */
     padding: 16px 16px 28px 16px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 5px 15px rgba(0, 0, 0, 0.4);
     border-radius: 4px;
@@ -1183,7 +1196,8 @@ body.no-scroll {
     font-family: 'Great Vibes', cursive;
     font-size: 1.8rem;
     text-align: center;
-    color: #ffd700; /* Gold color matching the site's accent system */
+    color: #ffd700;
+    /* Gold color matching the site's accent system */
     margin-top: 15px;
     line-height: 1.2;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -1211,7 +1225,8 @@ body.no-scroll {
     width: 100%;
     pointer-events: none;
     position: relative;
-    z-index: 15; /* Sits on top of the polaroids cluster */
+    z-index: 15;
+    /* Sits on top of the polaroids cluster */
 }
 
 /* Gallery Callouts (Side Text Phrases) */
@@ -1220,8 +1235,10 @@ body.no-scroll {
     font-family: 'Playfair Display', serif;
     font-size: 1.15rem;
     line-height: 1.6;
-    color: #e5e9f0; /* Matches main site light text color */
-    pointer-events: auto; /* Re-enable pointer events for buttons inside */
+    color: #e5e9f0;
+    /* Matches main site light text color */
+    pointer-events: auto;
+    /* Re-enable pointer events for buttons inside */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
@@ -1232,7 +1249,8 @@ body.no-scroll {
 
 .gallery-callout-text.text-right {
     margin-right: 40px;
-    margin-top: 40px; /* Align to the same height as the left callout */
+    margin-top: 40px;
+    /* Align to the same height as the left callout */
     text-align: right;
 }
 
@@ -1240,14 +1258,16 @@ body.no-scroll {
 /* Somil & Twinkle signature logo typography overlaying back */
 .branding-signature-container {
     position: relative;
-    margin-top: 15vh; /* Shifts the signatures down */
+    margin-top: 15vh;
+    /* Shifts the signatures down */
     width: 100%;
     pointer-events: none;
     z-index: 8;
     text-align: center;
 }
 
-.sig-somil, .sig-twinkle {
+.sig-somil,
+.sig-twinkle {
     font-weight: normal;
     line-height: 0.7;
     margin: 0;
@@ -1258,14 +1278,16 @@ body.no-scroll {
     font-family: 'Playfair Display', serif;
     font-size: 11.5rem;
     letter-spacing: -4px;
-    color: rgba(255, 255, 255, 0.03); /* Faint white background watermark */
+    color: rgba(255, 255, 255, 0.03);
+    /* Faint white background watermark */
     text-transform: uppercase;
 }
 
 .sig-twinkle {
     font-family: 'Great Vibes', cursive;
     font-size: 10rem;
-    color: rgba(212, 175, 55, 0.15); /* Luxury subtle golden calligraphy watermark */
+    color: rgba(212, 175, 55, 0.15);
+    /* Luxury subtle golden calligraphy watermark */
     transform: translateY(-40px);
 }
 
@@ -1293,7 +1315,8 @@ body.no-scroll {
     font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 2px;
-    color: #ffd700; /* Gold color */
+    color: #ffd700;
+    /* Gold color */
     text-transform: uppercase;
     animation: bounce 2s infinite;
 }
@@ -1304,16 +1327,19 @@ body.no-scroll {
         flex-direction: column;
         gap: 30px;
         min-height: auto;
-        margin: 50px 0 30px 0; /* Add top margin on mobile viewports to push below headers */
+        margin: 50px 0 30px 0;
+        /* Add top margin on mobile viewports to push below headers */
     }
 
     .polaroid-card {
         width: 320px;
-        transform: none !important; /* Remove rotation tilts to look tidy on mobile */
+        transform: none !important;
+        /* Remove rotation tilts to look tidy on mobile */
     }
 
     .branding-signature-container {
-        margin-top: 30vh; /* Shifts the brand signature down by 30% of screen height to prevent overlap in mobile views */
+        margin-top: 30vh;
+        /* Shifts the brand signature down by 30% of screen height to prevent overlap in mobile views */
     }
 
     .sig-somil {
@@ -1347,7 +1373,8 @@ body.no-scroll {
 
     .gallery-callout-text.text-right {
         align-items: center;
-        margin-top: 20px; /* Reset top margin override on mobile devices */
+        margin-top: 20px;
+        /* Reset top margin override on mobile devices */
     }
 
     .gallery-footer-statement {
@@ -1414,7 +1441,8 @@ body.no-scroll {
     top: 0;
     left: 50%;
     width: 3px;
-    height: 0%; /* Fills dynamically with JS scroll hook */
+    height: 0%;
+    /* Fills dynamically with JS scroll hook */
     background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728);
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
     transform: translateX(-50%);
@@ -1769,15 +1797,24 @@ body.no-scroll {
 }
 
 /* Stagger entrance animation */
-.side-action-btns .side-btn:nth-child(1) { animation: sideBtnSlideIn 0.6s 0.1s ease-out; }
-.side-action-btns .side-btn:nth-child(2) { animation: sideBtnSlideIn 0.6s 0.25s ease-out; }
-.side-action-btns .side-btn:nth-child(3) { animation: sideBtnSlideIn 0.6s 0.4s ease-out; }
+.side-action-btns .side-btn:nth-child(1) {
+    animation: sideBtnSlideIn 0.6s 0.1s ease-out;
+}
+
+.side-action-btns .side-btn:nth-child(2) {
+    animation: sideBtnSlideIn 0.6s 0.25s ease-out;
+}
+
+.side-action-btns .side-btn:nth-child(3) {
+    animation: sideBtnSlideIn 0.6s 0.4s ease-out;
+}
 
 @keyframes sideBtnSlideIn {
     0% {
         opacity: 0;
         transform: translateX(60px);
     }
+
     100% {
         opacity: 1;
         transform: translateX(0);
